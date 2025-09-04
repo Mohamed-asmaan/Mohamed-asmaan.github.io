@@ -153,6 +153,13 @@ Currently in active development with the following milestones achieved:
   }
 ]
 
+// Generate static params for static export
+export async function generateStaticParams() {
+  return projects.map((project) => ({
+    slug: project.slug,
+  }))
+}
+
 export default function ProjectPage({ params }: { params: { slug: string } }) {
   const project = projects.find(p => p.slug === params.slug)
 
