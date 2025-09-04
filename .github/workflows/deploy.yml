@@ -28,6 +28,22 @@ jobs:
           NEXT_TELEMETRY_DISABLED: 1
         run: npm run build
 
+      # Guardrails to ensure build succeeded
+      - name: Verify build output
+        run: |
+          echo "Checking build output..."
+          ls -la
+          echo "--- ./out directory ---"
+          ls -la ./out
+          echo "--- Checking for index.html ---"
+          if [ ! -f "./out/index.html" ]; then
+            echo "ERROR: index.html not found in ./out directory!"
+            exit 1
+          else
+            echo "✅ index.html found in ./out directory"
+            ls -la ./out/index.html
+          fi
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
