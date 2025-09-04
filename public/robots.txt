@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://asmaan-portfolio.vercel.app
+
+# Sitemaps
+Sitemap: https://asmaan-portfolio.vercel.app/sitemap.xml
