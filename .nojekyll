@@ -1,2 +1,2 @@
-# This file tells GitHub Pages not to use Jekyll
-# It's needed for static sites built with Next.js
+# This file tells GitHub Pages to serve static files directly
+# instead of trying to process them with Jekyll

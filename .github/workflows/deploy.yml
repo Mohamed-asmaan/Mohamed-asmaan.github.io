@@ -44,6 +44,13 @@ jobs:
             ls -la ./out/index.html
           fi
 
+      # Ensure .nojekyll file is copied to disable Jekyll processing
+      - name: Copy .nojekyll file
+        run: |
+          echo "Copying .nojekyll file to disable Jekyll processing..."
+          cp .nojekyll ./out/.nojekyll
+          echo "✅ .nojekyll file copied to ./out/"
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
