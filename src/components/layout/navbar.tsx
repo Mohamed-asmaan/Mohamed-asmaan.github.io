@@ -44,7 +44,7 @@ export function Navbar() {
   ]
 
   return (
-    <nav className={`sticky top-0 z-50 w-full transition-all duration-300 flex flex-row justify-center ${
+    <nav className={`sticky top-0 z-50 w-full transition-all duration-300 flex flex-row justify-between ${
       isScrolled 
         ? 'bg-background/95 backdrop-blur-md border-b shadow-sm' 
         : 'bg-transparent'
