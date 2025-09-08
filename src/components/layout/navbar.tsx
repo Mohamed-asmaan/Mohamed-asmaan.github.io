@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { Moon, Sun, Menu, X } from 'lucide-react'
 import { siteConfig } from '@/site.config'
 import { Button } from '@/components/ui/button'
+import { Container } from '@/components/ui/container'
 
 export function Navbar() {
   const [isDark, setIsDark] = useState(false)
@@ -47,7 +48,7 @@ export function Navbar() {
         ? 'bg-background/95 backdrop-blur-md border-b shadow-sm' 
         : 'bg-transparent'
     }`}>
-      <div className="container flex h-16 items-center justify-between">
+      <Container className="flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center space-x-3 group">
           <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
             <span className="text-primary-foreground font-bold text-lg">MA</span>
@@ -95,7 +96,7 @@ export function Navbar() {
             <span className="sr-only">Toggle menu</span>
           </Button>
         </div>
-      </div>
+      </Container>
 
       {/* Mobile Navigation */}
       <div className={`md:hidden transition-all duration-300 ease-in-out ${
@@ -103,7 +104,7 @@ export function Navbar() {
           ? 'max-h-64 opacity-100' 
           : 'max-h-0 opacity-0'
       } overflow-hidden`}>
-        <div className="container py-4 space-y-4 border-t bg-background/95 backdrop-blur-md">
+        <Container className="py-4 space-y-4 border-t bg-background/95 backdrop-blur-md">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -116,7 +117,7 @@ export function Navbar() {
               {item.label}
             </Link>
           ))}
-        </div>
+        </Container>
       </div>
     </nav>
   )

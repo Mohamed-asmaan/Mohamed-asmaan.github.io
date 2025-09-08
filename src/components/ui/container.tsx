@@ -10,7 +10,8 @@ export function Container({ children, className, as: Component = 'div' }: Contai
   return (
     <Component
       className={clsx(
-        'mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8',
+        // Industry standard: 1100px max-width with responsive padding
+        'mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8',
         className
       )}
     >
