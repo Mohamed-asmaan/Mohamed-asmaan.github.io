@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Container } from '@/components/ui/container'
 
 export function Navbar() {
+  // Navbar component with direct flex styling
   const [isDark, setIsDark] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
