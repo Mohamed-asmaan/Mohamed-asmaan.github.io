@@ -91,7 +91,7 @@ export default function HomePage() {
       {/* Expertise Section */}
       <section ref={expertiseRef} className="py-32 bg-muted/30">
         <Container>
-          <div className="text-center space-y-16">
+          <div className="flex flex-col items-center space-y-16">
             <div data-animate>
               <SectionHeading>What I Do</SectionHeading>
             </div>
@@ -128,7 +128,7 @@ export default function HomePage() {
       {/* Skills Section */}
       <section ref={skillsRef} className="py-32">
         <Container>
-          <div className="text-center space-y-16">
+          <div className="flex flex-col items-center space-y-16">
             <div data-animate>
               <SectionHeading>Skills & Technologies</SectionHeading>
             </div>
@@ -185,7 +185,7 @@ export default function HomePage() {
       {/* Featured Projects */}
       <section ref={projectsRef} className="py-32 bg-muted/30">
         <Container>
-          <div className="space-y-16">
+          <div className="flex flex-col items-center space-y-16">
             <div className="text-center" data-animate>
               <SectionHeading>Featured Projects</SectionHeading>
               <p className="text-muted-foreground mt-6 max-w-2xl mx-auto text-lg">
@@ -245,7 +245,7 @@ export default function HomePage() {
       {/* Freelance Projects */}
       <section ref={freelanceRef} className="py-32">
         <Container>
-          <div className="space-y-16">
+          <div className="flex flex-col items-center space-y-16">
             <div className="text-center" data-animate>
               <SectionHeading>Freelance Work</SectionHeading>
               <p className="text-muted-foreground mt-6 max-w-2xl mx-auto text-lg">
@@ -283,7 +283,7 @@ export default function HomePage() {
       {/* Independent Projects */}
       <section ref={independentRef} className="py-32 bg-muted/30">
         <Container>
-          <div className="space-y-16">
+          <div className="flex flex-col items-center space-y-16">
             <div className="text-center" data-animate>
               <SectionHeading>Independent Projects</SectionHeading>
               <p className="text-muted-foreground mt-6 max-w-2xl mx-auto text-lg">
@@ -334,7 +334,8 @@ export default function HomePage() {
       {/* Current Status */}
       <section ref={statusRef} className="py-32">
         <Container>
-          <div className="max-w-3xl mx-auto">
+          <div className="flex justify-center">
+            <div className="max-w-3xl">
             <Card className="border-primary/20 bg-white/50 backdrop-blur-sm hover:shadow-2xl transition-all duration-500">
               <CardHeader>
                 <div className="flex items-center space-x-3">
@@ -363,6 +364,7 @@ export default function HomePage() {
                 </div>
               </CardContent>
             </Card>
+            </div>
           </div>
         </Container>
       </section>

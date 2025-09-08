@@ -48,53 +48,55 @@ export function Navbar() {
         ? 'bg-background/95 backdrop-blur-md border-b shadow-sm' 
         : 'bg-transparent'
     }`}>
-      <Container className="flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center space-x-3 group">
-          <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-            <span className="text-primary-foreground font-bold text-lg">MA</span>
+      <Container className="flex h-16 items-center justify-center">
+        <div className="flex items-center space-x-8">
+          <Link href="/" className="flex items-center space-x-3 group">
+            <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <span className="text-primary-foreground font-bold text-lg">MA</span>
+            </div>
+            <span className="font-bold text-2xl group-hover:text-primary transition-colors">
+              {siteConfig.name.split(' ')[2]}
+            </span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`text-sm font-medium transition-all duration-300 hover:text-primary relative group ${
+                  pathname === item.href ? 'text-primary' : 'text-muted-foreground'
+                }`}
+              >
+                {item.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+            ))}
           </div>
-          <span className="font-bold text-2xl group-hover:text-primary transition-colors">
-            {siteConfig.name.split(' ')[2]}
-          </span>
-        </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`text-sm font-medium transition-all duration-300 hover:text-primary relative group ${
-                pathname === item.href ? 'text-primary' : 'text-muted-foreground'
-              }`}
+          <div className="flex items-center space-x-3">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleTheme}
+              className="h-10 w-10 p-0 rounded-full hover:bg-primary/10 transition-all duration-300"
             >
-              {item.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-            </Link>
-          ))}
-        </div>
+              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              <span className="sr-only">Toggle theme</span>
+            </Button>
 
-        <div className="flex items-center space-x-3">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={toggleTheme}
-            className="h-10 w-10 p-0 rounded-full hover:bg-primary/10 transition-all duration-300"
-          >
-            {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            <span className="sr-only">Toggle theme</span>
-          </Button>
-
-          {/* Mobile menu button */}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden h-10 w-10 p-0 rounded-full hover:bg-primary/10 transition-all duration-300"
-          >
-            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            <span className="sr-only">Toggle menu</span>
-          </Button>
+            {/* Mobile menu button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden h-10 w-10 p-0 rounded-full hover:bg-primary/10 transition-all duration-300"
+            >
+              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              <span className="sr-only">Toggle menu</span>
+            </Button>
+          </div>
         </div>
       </Container>
 
