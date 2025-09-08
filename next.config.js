@@ -5,8 +5,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: process.env.NODE_ENV === 'production' ? '/Mohamed-asmaan.github.io' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/Mohamed-asmaan.github.io' : '',
+  // Remove basePath and assetPrefix for GitHub Pages
+  // GitHub Pages serves from root, not from a subdirectory
 }
 
 module.exports = nextConfig
