@@ -48,8 +48,8 @@ export function Navbar() {
         ? 'bg-background/95 backdrop-blur-md border-b shadow-sm' 
         : 'bg-transparent'
     }`}>
-      <Container className="flex h-16 items-center justify-center">
-        <div className="flex items-center space-x-8">
+      <Container className="flex flex-col items-center">
+        <div className="flex h-16 items-center space-x-8">
           <Link href="/" className="flex items-center space-x-3 group">
             <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
               <span className="text-primary-foreground font-bold text-lg">MA</span>
