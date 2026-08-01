@@ -331,7 +331,7 @@ function Portfolio() {
             <Reveal delay={0.1}>
               <NowPlaying />
             </Reveal>
-            <Reveal delay={0.16} className="card-soft flex-1 p-6">
+            <Reveal delay={0.16} className="card-soft p-6">
               <p className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">this week</p>
               <div className="mt-4 space-y-4">
                 {[
