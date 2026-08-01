@@ -6,17 +6,33 @@ import Lenis from "lenis";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "M. Mohamed Asmaan — Frontend Engineer" },
-      { name: "description", content: "React engineer & creative developer. Cinematic, retro-futurist interfaces from Bengaluru." },
+      { title: "M. Mohamed Asmaan — Frontend Engineer & Interface Craftsman" },
+      {
+        name: "description",
+        content:
+          "Lo-fi workspace portfolio of M. Mohamed Asmaan — React & TypeScript engineer in Bengaluru building calm, fast, production interfaces.",
+      },
       { property: "og:title", content: "M. Mohamed Asmaan — Frontend Engineer" },
-      { property: "og:description", content: "React engineer & creative developer. Cinematic, retro-futurist interfaces." },
+      {
+        property: "og:description",
+        content: "React & TypeScript engineer. Calm interfaces, fast products, lo-fi workspace vibes.",
+      },
     ],
   }),
   component: Portfolio,
 });
 
-/* ---------- data ---------- */
-const NAV = ["hero", "about", "experience", "projects", "skills", "timeline", "stack", "log", "contact"];
+/* ---------------- data ---------------- */
+
+const SECTIONS = [
+  { id: "home", label: "home", glyph: "◉" },
+  { id: "about", label: "readme", glyph: "◒" },
+  { id: "work", label: "work", glyph: "◈" },
+  { id: "projects", label: "projects", glyph: "◇" },
+  { id: "stack", label: "stack", glyph: "◍" },
+  { id: "path", label: "path", glyph: "◌" },
+  { id: "contact", label: "contact", glyph: "◎" },
+];
 
 const EXPERIENCE = [
   {
@@ -28,7 +44,7 @@ const EXPERIENCE = [
       "Translated Figma designs into pixel-accurate, responsive React components for a production conversational platform.",
       "Owned UI modules end-to-end: design handoff → REST API integration → deployment.",
       "Cut unnecessary re-renders by 30% via memoisation and reconciliation-aware refactors.",
-      "Built reusable component library reducing duplicated code across product areas.",
+      "Built a reusable component library that removed duplicated code across product areas.",
     ],
   },
 ];
@@ -40,7 +56,8 @@ const PROJECTS = [
     kind: "Multilingual CMS Platform",
     stack: ["React", "Node.js", "REST", "CSS"],
     metric: "2.02M / mo impressions",
-    body: "900+ multilingual healthcare pages rendered without perf degradation. Conditional RTL for Arabic, EN/AR language switch, modular content APIs.",
+    accent: "mint",
+    body: "900+ multilingual healthcare pages rendered without perf degradation. Conditional RTL for Arabic, EN/AR switching, modular content APIs.",
   },
   {
     id: "02",
@@ -48,6 +65,7 @@ const PROJECTS = [
     kind: "Conversational UI Platform",
     stack: ["React", "TypeScript", "Firebase", "Node.js"],
     metric: "100+ msg chat state",
+    accent: "blurple",
     body: "Replaced traditional forms with a conversational React UI. Complex chat history state without lag. Firebase auth + Realtime DB, dynamic routing to live profiles.",
   },
   {
@@ -55,614 +73,495 @@ const PROJECTS = [
     title: "Pizza Palace",
     kind: "Full-Stack MERN",
     stack: ["React", "Redux Toolkit", "Express", "MongoDB", "Razorpay"],
-    metric: "End-to-end shipped",
-    body: "Complete food-ordering system built solo. DB schema, CRUD API, JWT auth, Razorpay integration with signature verification.",
+    metric: "shipped end-to-end, solo",
+    accent: "peach",
+    body: "Complete food-ordering system built alone: DB schema, CRUD API, JWT auth, and Razorpay integration with signature verification.",
   },
   {
     id: "04",
     title: "SEO DOM Inspector",
     kind: "Chrome Extension",
-    stack: ["React", "JS", "Chrome APIs"],
+    stack: ["React", "JavaScript", "Chrome APIs"],
     metric: "15+ DOM signals · non-blocking",
-    body: "Browser extension inspecting structural DOM signals in real time without blocking the main thread.",
+    accent: "lilac",
+    body: "Browser extension inspecting structural DOM signals in real time without ever blocking the main thread.",
   },
 ];
 
-const SKILLS = [
+const STACK = [
   { g: "core", items: ["React.js", "TypeScript", "JavaScript ES6+", "HTML5", "CSS3"] },
-  { g: "state / patterns", items: ["Hooks", "Context API", "Memoisation", "Reconciliation", "Redux Toolkit"] },
-  { g: "styling", items: ["Tailwind", "Bootstrap", "Responsive", "CSS Modules"] },
+  { g: "state & patterns", items: ["Hooks", "Context API", "Memoisation", "Reconciliation", "Redux Toolkit"] },
+  { g: "styling", items: ["Tailwind", "Bootstrap", "CSS Modules", "Responsive systems"] },
   { g: "data", items: ["REST", "GraphQL", "Firebase RTDB", "JWT / OTP"] },
-  { g: "tooling", items: ["Vite", "Webpack", "Git", "Postman", "Figma", "Chrome DevTools"] },
-  { g: "cs", items: ["DSA", "Event loop", "Closures", "Async/await", "Debounce/Throttle", "OOP"] },
+  { g: "tooling", items: ["Vite", "Webpack", "Git", "Postman", "Figma", "DevTools"] },
+  { g: "fundamentals", items: ["DSA", "Event loop", "Closures", "Async/await", "Debounce", "OOP"] },
 ];
 
-const TIMELINE = [
-  { t: "2019", e: "B.E. Computer Science — Anna University, Chennai" },
+const PATH = [
+  { t: "2019", e: "Started B.E. Computer Science — Anna University, Chennai." },
   { t: "2023", e: "Graduated. Began production frontend work." },
   { t: "2024", e: "Joined Alspark Solutions as Frontend Engineer (React.js)." },
   { t: "2024", e: "Started MCA at SRM Institute of Science and Technology." },
   { t: "2026", e: "MERN bootcamp — Error Makes Clever." },
 ];
 
-const LOG = [
-  "boot: system online",
-  "load: /portfolio/asmaan @ 60fps",
-  "mount: hooks · context · reconciler",
-  "net: rest-api handshake ok",
-  "gpu: composite layers ready",
-  "user: hello, world.",
+const TRACKS = [
+  { name: "midnight refactor", artist: "sleep.exe", len: "3:42" },
+  { name: "rain on the keycaps", artist: "lofi.dev", len: "4:08" },
+  { name: "coffee & closures", artist: "async waves", len: "2:57" },
 ];
 
-/* ---------- helpers ---------- */
-function useScramble(target: string, active: boolean, speed = 24) {
-  const [out, setOut] = useState(target);
+const STATUS = [
+  { k: "status", v: "open to work", tone: "mint" },
+  { k: "based", v: "Bengaluru, IN", tone: "lilac" },
+  { k: "focus", v: "React · TypeScript", tone: "peach" },
+];
+
+/* ---------------- small pieces ---------------- */
+
+function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (!active) { setOut(target); return; }
-    const chars = "!@#$%&*?/{}[]<>=+-_";
-    let f = 0;
-    const iv = window.setInterval(() => {
-      f++;
-      setOut(
-        target
-          .split("")
-          .map((c, i) => (i < f / 2 ? c : c === " " ? " " : chars[(Math.random() * chars.length) | 0]))
-          .join("")
-      );
-      if (f / 2 >= target.length) window.clearInterval(iv);
-    }, speed);
-    return () => window.clearInterval(iv);
-  }, [target, active, speed]);
-  return out;
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    gsap.set(el, { opacity: 0, y: 26 });
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          gsap.to(el, { opacity: 1, y: 0, duration: 0.9, delay, ease: "power3.out" });
+          io.disconnect();
+        }
+      },
+      { threshold: 0.12 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [delay]);
+  return (
+    <div ref={ref} className={className}>
+      {children}
+    </div>
+  );
 }
 
-/* ---------- component ---------- */
-function Portfolio() {
-  const scope = useRef<HTMLDivElement>(null);
-  const cursor = useRef<HTMLDivElement>(null);
-  const [time, setTime] = useState("");
-  const [booted, setBooted] = useState(false);
+function SectionHead({ index, title, note }: { index: string; title: string; note: string }) {
+  return (
+    <div className="mb-8 flex flex-wrap items-end justify-between gap-3 border-b border-border pb-4">
+      <div className="flex items-baseline gap-3">
+        <span className="font-mono text-xs text-blurple">{index}</span>
+        <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h2>
+      </div>
+      <p className="font-mono text-xs text-muted-foreground">{note}</p>
+    </div>
+  );
+}
 
-  // clock
+function NowPlaying() {
+  const [i, setI] = useState(0);
+  const [playing, setPlaying] = useState(true);
   useEffect(() => {
-    const upd = () => {
-      const d = new Date();
-      const fmt = new Intl.DateTimeFormat("en-GB", {
-        timeZone: "Asia/Kolkata",
-        hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false,
-      }).format(d);
-      setTime(fmt);
-    };
-    upd();
-    const iv = window.setInterval(upd, 1000);
-    return () => window.clearInterval(iv);
-  }, []);
+    if (!playing) return;
+    const t = window.setInterval(() => setI((p) => (p + 1) % TRACKS.length), 9000);
+    return () => window.clearInterval(t);
+  }, [playing]);
+  const track = TRACKS[i];
+  return (
+    <div className="card-soft flex items-center gap-3 p-3">
+      <button
+        onClick={() => setPlaying((p) => !p)}
+        aria-label={playing ? "Pause the lo-fi mix" : "Play the lo-fi mix"}
+        className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-surface-2 text-mint transition-colors hover:bg-muted"
+      >
+        {playing ? "❙❙" : "▶"}
+      </button>
+      <div className="min-w-0 flex-1">
+        <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">now playing</p>
+        <p className="truncate text-sm font-medium">{track.name}</p>
+        <p className="truncate font-mono text-xs text-muted-foreground">
+          {track.artist} · {track.len}
+        </p>
+      </div>
+      <div className="eq flex h-4 items-end gap-[3px]" style={{ opacity: playing ? 1 : 0.25 }} aria-hidden>
+        <span /><span /><span /><span />
+      </div>
+    </div>
+  );
+}
 
-  // Lenis smooth scroll
+function useActiveSection() {
+  const [active, setActive] = useState("home");
   useEffect(() => {
-    const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
-    let rafId = 0;
-    const raf = (t: number) => { lenis.raf(t); rafId = requestAnimationFrame(raf); };
-    rafId = requestAnimationFrame(raf);
-    return () => { cancelAnimationFrame(rafId); lenis.destroy(); };
-  }, []);
-
-  // cursor + mouse light
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      if (cursor.current) {
-        cursor.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-      }
-      document.documentElement.style.setProperty("--mx", `${e.clientX}px`);
-      document.documentElement.style.setProperty("--my", `${e.clientY}px`);
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, []);
-
-  // boot animation
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ onComplete: () => setBooted(true) });
-      tl.from("[data-boot-line]", { opacity: 0, y: 8, stagger: 0.08, duration: 0.3, ease: "power2.out" })
-        .to("[data-boot-screen]", { opacity: 0, duration: 0.6, delay: 0.3, pointerEvents: "none" }, ">")
-        .from("[data-hero-name] .word", { yPercent: 110, duration: 1.1, ease: "expo.out", stagger: 0.09 }, "-=0.3")
-        .from("[data-hero-meta]", { opacity: 0, y: 12, stagger: 0.06, duration: 0.5, ease: "power2.out" }, "-=0.7");
-
-      // scroll reveals
-      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
-        gsap.from(el, {
-          scrollTrigger: { trigger: el, start: "top 85%" },
-          opacity: 0, y: 24, duration: 0.9, ease: "expo.out",
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id);
         });
-      });
-    }, scope);
-    return () => ctx.revert();
-  }, []);
-
-  // dynamic ScrollTrigger register
-  useEffect(() => {
-    let mounted = true;
-    import("gsap/ScrollTrigger").then((m) => {
-      if (!mounted) return;
-      gsap.registerPlugin(m.ScrollTrigger);
-      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
-        gsap.from(el, {
-          scrollTrigger: { trigger: el, start: "top 88%" },
-          opacity: 0, y: 24, duration: 1, ease: "expo.out",
-        });
-      });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    SECTIONS.forEach((s) => {
+      const el = document.getElementById(s.id);
+      if (el) io.observe(el);
     });
-    return () => { mounted = false; };
+    return () => io.disconnect();
   }, []);
+  return active;
+}
+
+/* ---------------- page ---------------- */
+
+function Portfolio() {
+  const active = useActiveSection();
+  const [open, setOpen] = useState<string | null>("02");
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+    let id = 0;
+    const raf = (t: number) => {
+      lenis.raf(t);
+      id = requestAnimationFrame(raf);
+    };
+    id = requestAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(id);
+      lenis.destroy();
+    };
+  }, []);
+
+  useEffect(() => {
+    const tick = () =>
+      setTime(
+        new Intl.DateTimeFormat("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+          timeZone: "Asia/Kolkata",
+        }).format(new Date())
+      );
+    tick();
+    const t = window.setInterval(tick, 20000);
+    return () => window.clearInterval(t);
+  }, []);
+
+  const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 
   return (
-    <div ref={scope} className="relative min-h-screen text-foreground crt-flicker">
-      {/* CRT overlays */}
-      <div className="scanlines noise vignette pointer-events-none fixed inset-0 z-40" aria-hidden />
-      {/* mouse phosphor light */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0 z-30"
-        style={{
-          background:
-            "radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklab, var(--phosphor) 8%, transparent), transparent 60%)",
-        }}
-      />
-      {/* custom cursor */}
-      <div
-        ref={cursor}
-        className="pointer-events-none fixed left-0 top-0 z-50 hidden h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[color-mix(in_oklab,var(--phosphor)_60%,transparent)] mix-blend-difference md:block"
-        style={{ boxShadow: "0 0 20px color-mix(in oklab, var(--phosphor) 40%, transparent)" }}
-      />
-
-      {/* boot screen */}
-      <div
-        data-boot-screen
-        className="fixed inset-0 z-[60] flex items-end justify-start bg-background p-8 text-xs text-phosphor"
-      >
-        <div className="space-y-1 glow-phosphor">
-          {LOG.map((l, i) => (
-            <div key={i} data-boot-line>
-              <span className="text-muted-foreground">[{String(i).padStart(2, "0")}]</span> {l}
+    <div className="grain min-h-screen">
+      {/* top status bar */}
+      <header className="sticky top-0 z-50 border-b border-border/70 bg-background/70 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-8">
+          <div className="flex items-center gap-3">
+            <span className="grid h-8 w-8 place-items-center rounded-xl bg-blurple font-mono text-sm font-bold text-primary-foreground">
+              ma
+            </span>
+            <div className="leading-tight">
+              <p className="text-sm font-semibold">M. Mohamed Asmaan</p>
+              <p className="font-mono text-[0.68rem] text-muted-foreground">frontend engineer</p>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* nav */}
-      <header className="fixed left-0 right-0 top-0 z-30 flex items-center justify-between border-b border-border/60 bg-background/70 px-6 py-3 text-[11px] uppercase tracking-[0.2em] text-muted-foreground backdrop-blur-md">
-        <div className="flex items-center gap-3">
-          <span className="h-2 w-2 rounded-full bg-phosphor" style={{ boxShadow: "0 0 8px var(--phosphor)" }} />
-          <span className="text-foreground">M.A / OS.v2035</span>
-        </div>
-        <nav className="hidden gap-6 md:flex">
-          {NAV.slice(1).map((n) => (
-            <a key={n} href={`#${n}`} className="link-under hover:text-foreground">
-              {n}
-            </a>
-          ))}
-        </nav>
-        <div className="flex items-center gap-4">
-          <span>BLR · IN</span>
-          <span className="tabular-nums text-foreground">{time}</span>
+          </div>
+          <nav className="hidden items-center gap-1 md:flex">
+            {SECTIONS.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => go(s.id)}
+                className={`rounded-lg px-3 py-1.5 font-mono text-xs transition-colors ${
+                  active === s.id ? "bg-surface-2 text-foreground" : "text-muted-foreground hover:bg-surface hover:text-foreground"
+                }`}
+              >
+                {s.label}
+              </button>
+            ))}
+          </nav>
+          <div className="hidden items-center gap-2 font-mono text-xs text-muted-foreground sm:flex">
+            <span className="h-2 w-2 rounded-full bg-mint" style={{ animation: "blink 2.4s infinite" }} />
+            IST {time}
+          </div>
         </div>
       </header>
 
-      <main className="relative z-10 mx-auto max-w-[1400px] px-6 pt-24">
-        <Hero booted={booted} time={time} />
-        <About />
-        <Experience />
-        <Projects />
-        <Skills />
-        <Timeline />
-        <Stack />
-        <SystemLog />
-        <Contact />
-        <Footer />
-      </main>
-    </div>
-  );
-}
-
-/* ---------- sections ---------- */
-function SectionLabel({ id, n, t }: { id: string; n: string; t: string }) {
-  return (
-    <div id={id} className="mb-10 flex items-baseline justify-between border-b border-border pb-3 text-[11px] uppercase tracking-[0.28em] text-muted-foreground">
-      <span>
-        <span className="text-phosphor">§ {n}</span> &nbsp;/&nbsp; {t}
-      </span>
-      <span className="opacity-60">./{id}</span>
-    </div>
-  );
-}
-
-function Hero({ booted, time }: { booted: boolean; time: string }) {
-  const prompt = useScramble("compose interfaces at 60fps.", booted, 20);
-  return (
-    <section id="hero" className="relative min-h-[92vh] pt-10">
-      <div className="grid grid-cols-12 gap-6">
-        <div className="col-span-12 md:col-span-8">
-          <div data-hero-meta className="mb-6 text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-            <span className="text-phosphor">●</span> available · portfolio v2035.07
-          </div>
-
-          <h1
-            data-hero-name
-            className="font-display font-black leading-[0.82] tracking-[-0.05em] text-foreground glow-soft"
-            style={{ fontSize: "clamp(3.5rem, 12vw, 12rem)" }}
-          >
-            <div className="overflow-hidden"><div className="word">MOHAMED</div></div>
-            <div className="overflow-hidden"><div className="word text-phosphor glow-phosphor">ASMAAN.</div></div>
-          </h1>
-
-          <div data-hero-meta className="mt-8 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Frontend engineer &amp; creative developer. I build production React interfaces with the
-            restraint of industrial design and the pacing of cinema — currently owning UI end-to-end
-            at <span className="text-foreground">Alspark Solutions</span>, Bengaluru.
-          </div>
-
-          <div data-hero-meta className="mt-10 flex flex-wrap items-center gap-3 text-xs">
-            <a
-              href="#projects"
-              className="group relative inline-flex items-center gap-3 border border-phosphor/60 bg-phosphor/5 px-5 py-3 text-phosphor transition hover:bg-phosphor hover:text-background"
-            >
-              <span className="tabular-nums">[01]</span> view case studies
-              <span aria-hidden>→</span>
-            </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-3 border border-border px-5 py-3 text-foreground transition hover:border-foreground"
-            >
-              <span className="tabular-nums text-muted-foreground">[02]</span> open channel
-            </a>
-          </div>
-
-          <div data-hero-meta className="mt-14 flex items-center gap-2 text-sm text-phosphor glow-phosphor">
-            <span className="text-muted-foreground">$</span>
-            <span className="cursor-blink">{prompt}</span>
-          </div>
-        </div>
-
-        {/* side panel */}
-        <aside data-hero-meta className="col-span-12 md:col-span-4">
-          <div className="panel relative overflow-hidden p-5">
-            <div className="mb-4 flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-              <span>sys.status</span>
-              <span className="flex gap-1">
-                <i className="h-2 w-2 rounded-full bg-amber" />
-                <i className="h-2 w-2 rounded-full bg-cyan" />
-                <i className="h-2 w-2 rounded-full bg-phosphor" />
-              </span>
+      <div className="mx-auto max-w-6xl px-4 pb-24 sm:px-8">
+        {/* hero */}
+        <section id="home" className="grid gap-6 py-14 lg:grid-cols-[1.6fr_1fr] lg:py-20">
+          <Reveal className="card-soft relative overflow-hidden p-7 sm:p-10">
+            <div className="mb-6 flex items-center gap-2">
+              <span className="h-3 w-3 rounded-full bg-peach" />
+              <span className="h-3 w-3 rounded-full bg-mint" />
+              <span className="h-3 w-3 rounded-full bg-blurple" />
+              <span className="ml-2 font-mono text-xs text-muted-foreground">~/asmaan — workspace</span>
             </div>
-            <dl className="grid grid-cols-2 gap-y-3 text-xs">
-              <dt className="text-muted-foreground">operator</dt><dd>m.mohamed.asmaan</dd>
-              <dt className="text-muted-foreground">role</dt><dd>frontend engineer</dd>
-              <dt className="text-muted-foreground">location</dt><dd>bengaluru · IN</dd>
-              <dt className="text-muted-foreground">timezone</dt><dd>IST · UTC+5:30</dd>
-              <dt className="text-muted-foreground">local time</dt><dd className="tabular-nums text-phosphor">{time}</dd>
-              <dt className="text-muted-foreground">uptime</dt><dd>2+ yrs prod</dd>
-              <dt className="text-muted-foreground">focus</dt><dd>React · TS · motion</dd>
-              <dt className="text-muted-foreground">status</dt><dd className="text-phosphor">◉ online</dd>
-            </dl>
+            <p className="font-mono text-xs uppercase tracking-[0.28em] text-blurple">react · typescript · interfaces</p>
+            <h1 className="mt-4 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
+              I build calm software
+              <br />
+              <span className="text-lilac">that loads fast</span> and
+              <br />
+              feels effortless.
+            </h1>
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
+              Frontend engineer in Bengaluru. I turn dense product requirements into interfaces people actually enjoy
+              using — accessible, responsive, and tuned down to the re-render.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <button
+                onClick={() => go("projects")}
+                className="glow-blurple rounded-xl bg-blurple px-5 py-2.5 text-sm font-medium text-primary-foreground transition-transform hover:-translate-y-0.5"
+              >
+                See the work
+              </button>
+              <button
+                onClick={() => go("contact")}
+                className="rounded-xl border border-border bg-surface-2 px-5 py-2.5 text-sm font-medium transition-colors hover:bg-muted"
+              >
+                Say hello
+              </button>
+            </div>
+            <div className="mt-9 flex flex-wrap gap-2">
+              {STATUS.map((s) => (
+                <span key={s.k} className="chip">
+                  <span className="text-muted-foreground">{s.k}:</span>
+                  <span className={`text-${s.tone}`}>{s.v}</span>
+                </span>
+              ))}
+            </div>
+          </Reveal>
 
-            <div className="mt-6 border-t border-border pt-4">
-              <div className="mb-2 text-[10px] uppercase tracking-[0.24em] text-muted-foreground">frame.rate</div>
-              <div className="flex items-end gap-[3px] h-10">
-                {Array.from({ length: 48 }).map((_, i) => (
-                  <span
-                    key={i}
-                    className="w-1 bg-phosphor/70"
-                    style={{ height: `${20 + Math.abs(Math.sin((i + 1) * 0.7)) * 80}%`, opacity: 0.35 + Math.random() * 0.5 }}
-                  />
+          <div className="flex flex-col gap-6">
+            <Reveal delay={0.1}>
+              <NowPlaying />
+            </Reveal>
+            <Reveal delay={0.16} className="card-soft p-6">
+              <p className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">this week</p>
+              <div className="mt-4 space-y-4">
+                {[
+                  { k: "shipping", v: "component library v2", tone: "text-mint" },
+                  { k: "reading", v: "React reconciler internals", tone: "text-lilac" },
+                  { k: "learning", v: "MCA · SRM Institute", tone: "text-peach" },
+                ].map((r) => (
+                  <div key={r.k} className="flex items-baseline justify-between gap-3 border-b border-border/60 pb-3 last:border-0">
+                    <span className="font-mono text-xs text-muted-foreground">{r.k}</span>
+                    <span className={`text-right text-sm ${r.tone}`}>{r.v}</span>
+                  </div>
                 ))}
               </div>
-              <div className="mt-2 text-[10px] text-muted-foreground">60.00 fps · main thread idle</div>
-            </div>
+            </Reveal>
           </div>
-        </aside>
-      </div>
+        </section>
 
-      {/* scroll indicator */}
-      <div className="pointer-events-none absolute bottom-4 left-0 right-0 flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-        <span>scroll ↓</span>
-        <span>index / 09</span>
-      </div>
-    </section>
-  );
-}
-
-function About() {
-  return (
-    <section className="py-40" data-reveal>
-      <SectionLabel id="about" n="01" t="about the operator" />
-      <div className="grid grid-cols-12 gap-6">
-        <p className="col-span-12 font-display text-3xl leading-tight tracking-tight md:col-span-8 md:text-5xl">
-          I design and engineer the <span className="text-phosphor">quiet, exacting parts</span> of software —
-          the interfaces users don't have to think about. Two years of shipping React in production,
-          with a bias toward performance, motion that has intent, and code someone else can maintain.
-        </p>
-        <div className="col-span-12 space-y-6 text-sm text-muted-foreground md:col-span-4">
-          <div>
-            <div className="mb-1 text-[10px] uppercase tracking-[0.24em] text-phosphor">discipline</div>
-            React internals: hooks, context, memoisation, reconciliation & diffing. Debugging as a first-class craft.
-          </div>
-          <div>
-            <div className="mb-1 text-[10px] uppercase tracking-[0.24em] text-phosphor">taste</div>
-            Industrial design over decoration. Motion that carries meaning. Typography as UI.
-          </div>
-          <div>
-            <div className="mb-1 text-[10px] uppercase tracking-[0.24em] text-phosphor">currently</div>
-            MCA @ SRM · MERN bootcamp @ Error Makes Clever · shipping @ Alspark.
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Experience() {
-  return (
-    <section className="py-40" data-reveal>
-      <SectionLabel id="experience" n="02" t="experience.log" />
-      <div className="grid grid-cols-12 gap-6">
-        {EXPERIENCE.map((x) => (
-          <article key={x.role} className="panel col-span-12 p-6 md:p-10">
-            <header className="mb-6 grid grid-cols-12 items-baseline gap-3 border-b border-border pb-4">
-              <div className="col-span-12 md:col-span-8">
-                <div className="text-[10px] uppercase tracking-[0.28em] text-muted-foreground">{x.range} · {x.loc}</div>
-                <h3 className="mt-2 font-display text-3xl tracking-tight md:text-5xl">{x.role}</h3>
-                <div className="mt-1 text-phosphor">@ {x.org}</div>
+        {/* about */}
+        <section id="about" className="py-16">
+          <SectionHead index="01" title="readme.md" note="who's behind the keyboard" />
+          <div className="grid gap-6 lg:grid-cols-3">
+            <Reveal className="card-soft p-7 lg:col-span-2">
+              <div className="space-y-4 leading-relaxed text-muted-foreground">
+                <p>
+                  I&apos;m <span className="text-foreground">Asmaan</span> — a React engineer who cares about the boring
+                  parts: layout stability, keyboard access, bundle weight, and the 200ms that decide whether a product
+                  feels premium or cheap.
+                </p>
+                <p>
+                  At Alspark Solutions I own UI modules from Figma handoff through API integration to deploy. Outside
+                  work I build small tools, break things on purpose, and keep a lo-fi playlist running.
+                </p>
+                <p className="font-mono text-sm text-foreground">
+                  <span className="text-blurple">const</span> philosophy ={" "}
+                  <span className="text-peach">&quot;fewer elements, better motion, zero jank&quot;</span>;
+                </p>
               </div>
-              <div className="col-span-12 flex items-center justify-end gap-2 text-[10px] uppercase tracking-[0.24em] text-muted-foreground md:col-span-4">
-                <span className="h-1.5 w-1.5 rounded-full bg-phosphor" style={{ boxShadow: "0 0 6px var(--phosphor)" }} />
-                active tenure
-              </div>
-            </header>
-            <ul className="grid gap-4 text-sm md:grid-cols-2">
-              {x.bullets.map((b, i) => (
-                <li key={i} className="flex gap-3">
-                  <span className="mt-1 text-phosphor">→</span>
-                  <span className="text-muted-foreground">{b}</span>
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Projects() {
-  const [open, setOpen] = useState<string | null>("01");
-  return (
-    <section className="py-40" data-reveal>
-      <SectionLabel id="projects" n="03" t="selected works / floating panels" />
-      <div className="space-y-3">
-        {PROJECTS.map((p) => {
-          const isOpen = open === p.id;
-          return (
-            <article
-              key={p.id}
-              className={`group panel relative cursor-pointer overflow-hidden p-6 transition-[background,transform] duration-500 hover:-translate-y-[2px] ${isOpen ? "bg-surface" : ""}`}
-              onClick={() => setOpen(isOpen ? null : p.id)}
-            >
-              <header className="grid grid-cols-12 items-center gap-3">
-                <div className="col-span-2 font-mono text-xs tabular-nums text-muted-foreground md:col-span-1">{p.id}</div>
-                <div className="col-span-10 md:col-span-5">
-                  <h3 className="font-display text-2xl tracking-tight transition group-hover:text-phosphor md:text-4xl">{p.title}</h3>
-                </div>
-                <div className="col-span-6 hidden text-xs text-muted-foreground md:col-span-3 md:block">{p.kind}</div>
-                <div className="col-span-6 hidden text-right text-xs text-phosphor md:col-span-2 md:block">{p.metric}</div>
-                <div className="col-span-2 flex items-center justify-end text-lg md:col-span-1">
-                  <span className={`transition-transform duration-500 ${isOpen ? "rotate-45 text-phosphor" : "text-muted-foreground"}`}>+</span>
-                </div>
-              </header>
-
-              <div
-                className="grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-[cubic-bezier(.7,0,.2,1)]"
-                style={{ gridTemplateRows: isOpen ? "1fr" : "0fr", opacity: isOpen ? 1 : 0 }}
-              >
-                <div className="min-h-0">
-                  <div className="mt-6 grid grid-cols-12 gap-6 border-t border-border pt-6">
-                    <p className="col-span-12 text-sm text-muted-foreground md:col-span-7">{p.body}</p>
-                    <div className="col-span-12 md:col-span-5">
-                      <div className="mb-2 text-[10px] uppercase tracking-[0.24em] text-muted-foreground">stack</div>
-                      <div className="flex flex-wrap gap-2">
-                        {p.stack.map((s) => (
-                          <span key={s} className="border border-border px-2 py-1 text-xs text-foreground">{s}</span>
-                        ))}
-                      </div>
-                      <div className="mt-6 text-[10px] uppercase tracking-[0.24em] text-muted-foreground">metric</div>
-                      <div className="mt-1 text-phosphor glow-phosphor">{p.metric}</div>
-                    </div>
+            </Reveal>
+            <Reveal delay={0.1} className="card-soft p-7">
+              <div className="grid grid-cols-2 gap-5">
+                {[
+                  { n: "2.02M", l: "monthly impressions" },
+                  { n: "30%", l: "fewer re-renders" },
+                  { n: "900+", l: "pages shipped" },
+                  { n: "4+", l: "products in prod" },
+                ].map((s) => (
+                  <div key={s.l}>
+                    <p className="text-2xl font-semibold tracking-tight text-lilac">{s.n}</p>
+                    <p className="mt-1 font-mono text-[0.68rem] leading-snug text-muted-foreground">{s.l}</p>
                   </div>
-                </div>
+                ))}
               </div>
-            </article>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
+            </Reveal>
+          </div>
+        </section>
 
-function Skills() {
-  return (
-    <section className="py-40" data-reveal>
-      <SectionLabel id="skills" n="04" t="modules / capability matrix" />
-      <div className="grid grid-cols-12 gap-3">
-        {SKILLS.map((g, gi) => (
-          <div key={g.g} className="panel col-span-12 p-5 sm:col-span-6 lg:col-span-4">
-            <div className="mb-4 flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-              <span>mod.{String(gi).padStart(2, "0")}</span>
-              <span className="text-phosphor">{g.g}</span>
-            </div>
-            <ul className="space-y-2 text-sm">
-              {g.items.map((it) => (
-                <li key={it} className="group flex items-center justify-between border-b border-border/50 py-1">
-                  <span className="flex items-center gap-2">
-                    <span className="h-1 w-1 rounded-full bg-phosphor transition group-hover:scale-[3]" />
-                    {it}
-                  </span>
-                  <span className="text-[10px] text-muted-foreground opacity-0 transition group-hover:opacity-100">active</span>
+        {/* work */}
+        <section id="work" className="py-16">
+          <SectionHead index="02" title="where I work" note="current role" />
+          {EXPERIENCE.map((x) => (
+            <Reveal key={x.org} className="card-soft p-7">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <div>
+                  <h3 className="text-lg font-semibold">{x.role}</h3>
+                  <p className="font-mono text-sm text-blurple">{x.org}</p>
+                </div>
+                <p className="font-mono text-xs text-muted-foreground">
+                  {x.range} · {x.loc}
+                </p>
+              </div>
+              <ul className="mt-5 space-y-3">
+                {x.bullets.map((b) => (
+                  <li key={b} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-mint" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          ))}
+        </section>
+
+        {/* projects */}
+        <section id="projects" className="py-16">
+          <SectionHead index="03" title="selected projects" note="click a card to expand" />
+          <div className="grid gap-4 sm:grid-cols-2">
+            {PROJECTS.map((p, i) => {
+              const isOpen = open === p.id;
+              return (
+                <Reveal key={p.id} delay={i * 0.06}>
+                  <button
+                    onClick={() => setOpen(isOpen ? null : p.id)}
+                    aria-expanded={isOpen}
+                    className={`card-soft group w-full p-6 text-left transition-all duration-300 hover:-translate-y-1 ${
+                      isOpen ? "glow-blurple" : ""
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <p className="font-mono text-xs text-muted-foreground">{p.id}</p>
+                        <h3 className={`mt-1 text-lg font-semibold text-${p.accent}`}>{p.title}</h3>
+                        <p className="font-mono text-xs text-muted-foreground">{p.kind}</p>
+                      </div>
+                      <span className="font-mono text-xs text-muted-foreground transition-transform group-hover:translate-x-0.5">
+                        {isOpen ? "−" : "+"}
+                      </span>
+                    </div>
+                    <div
+                      className="grid transition-[grid-template-rows,opacity] duration-500"
+                      style={{ gridTemplateRows: isOpen ? "1fr" : "0fr", opacity: isOpen ? 1 : 0 }}
+                    >
+                      <div className="overflow-hidden">
+                        <p className="pt-4 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+                      </div>
+                    </div>
+                    <div className="mt-5 flex flex-wrap items-center gap-2">
+                      {p.stack.map((s) => (
+                        <span key={s} className="chip">
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="mt-4 font-mono text-xs text-mint">{p.metric}</p>
+                  </button>
+                </Reveal>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* stack */}
+        <section id="stack" className="py-16">
+          <SectionHead index="04" title="toolbox" note="what I reach for" />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {STACK.map((g, i) => (
+              <Reveal key={g.g} delay={i * 0.05} className="card-soft h-full p-6">
+                <p className="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-blurple">{g.g}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {g.items.map((it) => (
+                    <span key={it} className="chip">
+                      {it}
+                    </span>
+                  ))}
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        {/* path */}
+        <section id="path" className="py-16">
+          <SectionHead index="05" title="the path so far" note="commit history" />
+          <Reveal className="card-soft p-7">
+            <ol className="relative space-y-7 border-l border-border pl-7">
+              {PATH.map((p) => (
+                <li key={p.t + p.e} className="relative">
+                  <span className="absolute -left-[2.05rem] top-1.5 h-2.5 w-2.5 rounded-full bg-blurple ring-4 ring-background" />
+                  <p className="font-mono text-xs text-peach">{p.t}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{p.e}</p>
                 </li>
               ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
+            </ol>
+          </Reveal>
+        </section>
 
-function Timeline() {
-  return (
-    <section className="py-40" data-reveal>
-      <SectionLabel id="timeline" n="05" t="timeline / system journal" />
-      <div className="relative">
-        <div className="absolute left-[7.5rem] top-0 hidden h-full w-px bg-border md:block" />
-        <ol className="space-y-6">
-          {TIMELINE.map((r, i) => (
-            <li key={i} className="grid grid-cols-12 items-center gap-4 text-sm">
-              <div className="col-span-3 tabular-nums text-phosphor md:col-span-2">{r.t}</div>
-              <div className="relative col-span-1 hidden md:block">
-                <span className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-phosphor" style={{ boxShadow: "0 0 8px var(--phosphor)" }} />
+        {/* contact */}
+        <section id="contact" className="py-16">
+          <SectionHead index="06" title="say hello" note="replies within a day" />
+          <Reveal className="card-soft overflow-hidden">
+            <div className="grid gap-0 md:grid-cols-2">
+              <div className="p-8">
+                <h3 className="text-2xl font-semibold tracking-tight">
+                  Got a product that deserves a better interface?
+                </h3>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                  Freelance, full-time, or just a chat about React internals and good typography — my inbox is open.
+                </p>
+                <a
+                  href="mailto:asmaan@example.com"
+                  className="glow-blurple mt-7 inline-block rounded-xl bg-blurple px-5 py-2.5 text-sm font-medium text-primary-foreground transition-transform hover:-translate-y-0.5"
+                >
+                  asmaan@example.com
+                </a>
               </div>
-              <div className="col-span-9 border-l border-border pl-4 text-foreground md:col-span-9 md:border-0 md:pl-0">
-                <span className="text-muted-foreground">[log]</span> {r.e}
+              <div className="border-t border-border bg-surface-2/50 p-8 md:border-l md:border-t-0">
+                <p className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">elsewhere</p>
+                <ul className="mt-5 space-y-4 font-mono text-sm">
+                  {[
+                    { l: "github", v: "/asmaan", h: "https://github.com" },
+                    { l: "linkedin", v: "/in/asmaan", h: "https://linkedin.com" },
+                    { l: "location", v: "Bengaluru, India", h: null },
+                  ].map((r) => (
+                    <li key={r.l} className="flex items-baseline justify-between gap-3">
+                      <span className="text-muted-foreground">{r.l}</span>
+                      {r.h ? (
+                        <a href={r.h} target="_blank" rel="noreferrer" className="link-under text-lilac">
+                          {r.v}
+                        </a>
+                      ) : (
+                        <span className="text-foreground">{r.v}</span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-  );
-}
+            </div>
+          </Reveal>
+        </section>
 
-function Stack() {
-  const items = ["React", "TypeScript", "JavaScript", "Tailwind", "Vite", "Node.js", "Express", "MongoDB", "Firebase", "GSAP", "Redux", "Figma"];
-  return (
-    <section className="py-40" data-reveal>
-      <SectionLabel id="stack" n="06" t="tech stack / marquee" />
-      <div className="relative overflow-hidden border-y border-border py-8">
-        <div className="flex gap-14 whitespace-nowrap font-display text-5xl tracking-tight text-foreground md:text-7xl" style={{ animation: "marq 40s linear infinite" }}>
-          {[...items, ...items, ...items].map((s, i) => (
-            <span key={i} className="opacity-80 hover:text-phosphor">
-              {s} <span className="text-phosphor">✦</span>
-            </span>
-          ))}
-        </div>
+        <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-8 font-mono text-xs text-muted-foreground">
+          <span>© {new Date().getFullYear()} M. Mohamed Asmaan</span>
+          <span>built with react · tuned by ear</span>
+        </footer>
       </div>
-      <style>{`@keyframes marq { to { transform: translateX(-33.333%); } }`}</style>
-    </section>
-  );
-}
 
-function SystemLog() {
-  const posts = [
-    { d: "2026.05", t: "Notes on Reconciliation", s: "How React's diffing shaped my mental model of components." },
-    { d: "2026.03", t: "Motion With Restraint", s: "Why animation should be a spec, not a decoration." },
-    { d: "2025.11", t: "Shipping Multilingual", s: "Lessons from 900+ pages, EN/AR, and 2M monthly reads." },
-  ];
-  return (
-    <section className="py-40" data-reveal>
-      <SectionLabel id="log" n="07" t="notes / journal (soon)" />
-      <div className="grid grid-cols-12 gap-3">
-        {posts.map((p) => (
-          <article key={p.t} className="panel col-span-12 flex flex-col justify-between p-6 md:col-span-4 min-h-[220px]">
-            <div className="text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{p.d} · draft</div>
-            <h3 className="mt-6 font-display text-2xl tracking-tight">{p.t}</h3>
-            <p className="mt-3 text-sm text-muted-foreground">{p.s}</p>
-            <div className="mt-6 text-xs text-phosphor">read → soon</div>
-          </article>
+      {/* mobile dock */}
+      <nav className="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-1 rounded-2xl border border-border bg-background/85 px-2 py-2 backdrop-blur-xl md:hidden">
+        {SECTIONS.map((s) => (
+          <button
+            key={s.id}
+            onClick={() => go(s.id)}
+            aria-label={s.label}
+            className={`grid h-9 w-9 place-items-center rounded-xl text-sm transition-colors ${
+              active === s.id ? "bg-blurple text-primary-foreground" : "text-muted-foreground"
+            }`}
+          >
+            {s.glyph}
+          </button>
         ))}
-      </div>
-    </section>
-  );
-}
-
-function Contact() {
-  const [line, setLine] = useState("");
-  const [history, setHistory] = useState<string[]>([
-    "channel@asmaan:~ $ open --contact",
-    "session established. type 'help' for commands.",
-  ]);
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const cmd = line.trim().toLowerCase();
-    const reply: string[] = [`> ${line}`];
-    if (cmd === "help") reply.push("commands: email, github, linkedin, cv, clear");
-    else if (cmd === "email") { reply.push("→ asmaan011@gmail.com"); window.location.href = "mailto:asmaan011@gmail.com"; }
-    else if (cmd === "github") { reply.push("→ github.com/Mohamed-asmaan"); window.open("https://github.com/Mohamed-asmaan", "_blank"); }
-    else if (cmd === "linkedin") { reply.push("→ linkedin.com/in/mohamed-asmaan"); window.open("https://linkedin.com/in/mohamed-asmaan", "_blank"); }
-    else if (cmd === "cv") reply.push("cv available on request.");
-    else if (cmd === "clear") { setHistory([]); setLine(""); return; }
-    else reply.push(`unknown: '${line}'. try 'help'.`);
-    setHistory((h) => [...h, ...reply]);
-    setLine("");
-  };
-  return (
-    <section className="py-40" data-reveal>
-      <SectionLabel id="contact" n="08" t="open a channel" />
-      <div className="grid grid-cols-12 gap-6">
-        <div className="col-span-12 md:col-span-7">
-          <h2 className="font-display text-5xl leading-[0.9] tracking-tight md:text-7xl">
-            let's build <br /><span className="text-phosphor glow-phosphor">something quiet</span> <br />that ships loud.
-          </h2>
-          <div className="mt-8 space-y-2 text-sm text-muted-foreground">
-            <div><span className="text-phosphor">◉</span> available for freelance & full-time (React / frontend).</div>
-            <div><span className="text-phosphor">◉</span> comfortable owning UI end-to-end.</div>
-          </div>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a href="mailto:asmaan011@gmail.com" className="link-under text-foreground">asmaan011@gmail.com</a>
-            <span className="text-muted-foreground">·</span>
-            <a href="https://github.com/Mohamed-asmaan" target="_blank" rel="noreferrer" className="link-under text-foreground">github</a>
-            <span className="text-muted-foreground">·</span>
-            <a href="https://linkedin.com/in/mohamed-asmaan" target="_blank" rel="noreferrer" className="link-under text-foreground">linkedin</a>
-          </div>
-        </div>
-        <div className="col-span-12 md:col-span-5">
-          <div className="panel h-full p-4">
-            <div className="mb-3 flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-              <span>terminal · /contact</span>
-              <span className="flex gap-1">
-                <i className="h-2 w-2 rounded-full bg-amber" />
-                <i className="h-2 w-2 rounded-full bg-cyan" />
-                <i className="h-2 w-2 rounded-full bg-phosphor" />
-              </span>
-            </div>
-            <div className="max-h-64 min-h-[220px] space-y-1 overflow-y-auto text-xs text-foreground">
-              {history.map((h, i) => (
-                <div key={i} className={h.startsWith(">") ? "text-phosphor" : "text-muted-foreground"}>{h}</div>
-              ))}
-            </div>
-            <form onSubmit={submit} className="mt-3 flex items-center gap-2 border-t border-border pt-3 text-xs">
-              <span className="text-phosphor">$</span>
-              <input
-                autoComplete="off"
-                value={line}
-                onChange={(e) => setLine(e.target.value)}
-                placeholder="type 'help'"
-                className="w-full bg-transparent text-foreground placeholder:text-muted-foreground focus:outline-none"
-              />
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="mt-20 border-t border-border py-8 text-[11px] uppercase tracking-[0.24em] text-muted-foreground">
-      <div className="grid grid-cols-12 gap-3">
-        <div className="col-span-6 md:col-span-4">© {new Date().getFullYear()} · m. mohamed asmaan</div>
-        <div className="col-span-6 md:col-span-4 md:text-center">portfolio v2035.07 · built with react + gsap</div>
-        <div className="col-span-12 text-left md:col-span-4 md:text-right">end of transmission ▊</div>
-      </div>
-    </footer>
+      </nav>
+    </div>
   );
 }
