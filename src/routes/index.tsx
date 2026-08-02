@@ -430,7 +430,7 @@ function Portfolio() {
 
       <main className="relative z-10">
         {/* HERO */}
-        <section id="home" className="relative flex min-h-screen items-center px-5 sm:px-8 lg:px-24">
+        <section id="home" className="relative flex min-h-screen items-center px-5 sm:px-8 lg:pl-40 lg:pr-24">
           <div className="hero-inner w-full">
             <div className="hero-meta mb-6 flex flex-wrap items-center gap-3">
               <span className="tag">SECTOR 07 · BENGALURU</span>
