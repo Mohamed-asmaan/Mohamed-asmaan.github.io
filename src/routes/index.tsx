@@ -1,22 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+
+const CityScene = lazy(() => import("../components/CityScene"));
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "M. Mohamed Asmaan — Frontend Engineer & Interface Craftsman" },
+      { title: "M. Mohamed Asmaan — Frontend Engineer / Interface Systems 2099" },
       {
         name: "description",
         content:
-          "Lo-fi workspace portfolio of M. Mohamed Asmaan — React & TypeScript engineer in Bengaluru building calm, fast, production interfaces.",
+          "Cinematic portfolio of M. Mohamed Asmaan — React & TypeScript engineer in Bengaluru building high-performance, motion-driven interfaces.",
       },
-      { property: "og:title", content: "M. Mohamed Asmaan — Frontend Engineer" },
+      { property: "og:title", content: "M. Mohamed Asmaan — Interface Systems" },
       {
         property: "og:description",
-        content: "React & TypeScript engineer. Calm interfaces, fast products, lo-fi workspace vibes.",
+        content: "React & TypeScript engineer. Neon-grade interfaces, WebGL atmospheres, motion-first engineering.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Portfolio,
@@ -25,20 +30,20 @@ export const Route = createFileRoute("/")({
 /* ---------------- data ---------------- */
 
 const SECTIONS = [
-  { id: "home", label: "home", glyph: "◉" },
-  { id: "about", label: "readme", glyph: "◒" },
-  { id: "work", label: "work", glyph: "◈" },
-  { id: "projects", label: "projects", glyph: "◇" },
-  { id: "stack", label: "stack", glyph: "◍" },
-  { id: "path", label: "path", glyph: "◌" },
-  { id: "contact", label: "contact", glyph: "◎" },
+  { id: "home", label: "index" },
+  { id: "about", label: "profile" },
+  { id: "work", label: "service" },
+  { id: "projects", label: "archive" },
+  { id: "stack", label: "systems" },
+  { id: "path", label: "timeline" },
+  { id: "contact", label: "uplink" },
 ];
 
 const EXPERIENCE = [
   {
     role: "Frontend Engineer — React.js",
     org: "Alspark Solutions",
-    range: "2024 — Present",
+    range: "2024 — PRESENT",
     loc: "Bengaluru, IN",
     bullets: [
       "Translated Figma designs into pixel-accurate, responsive React components for a production conversational platform.",
@@ -55,8 +60,8 @@ const PROJECTS = [
     title: "Bangla Health Connect",
     kind: "Multilingual CMS Platform",
     stack: ["React", "Node.js", "REST", "CSS"],
-    metric: "2.02M / mo impressions",
-    accent: "mint",
+    metric: "2.02M / MO IMPRESSIONS",
+    accent: "var(--neon-cyan)",
     body: "900+ multilingual healthcare pages rendered without perf degradation. Conditional RTL for Arabic, EN/AR switching, modular content APIs.",
   },
   {
@@ -64,8 +69,8 @@ const PROJECTS = [
     title: "Number Link",
     kind: "Conversational UI Platform",
     stack: ["React", "TypeScript", "Firebase", "Node.js"],
-    metric: "100+ msg chat state",
-    accent: "blurple",
+    metric: "100+ MSG CHAT STATE",
+    accent: "var(--neon-magenta)",
     body: "Replaced traditional forms with a conversational React UI. Complex chat history state without lag. Firebase auth + Realtime DB, dynamic routing to live profiles.",
   },
   {
@@ -73,8 +78,8 @@ const PROJECTS = [
     title: "Pizza Palace",
     kind: "Full-Stack MERN",
     stack: ["React", "Redux Toolkit", "Express", "MongoDB", "Razorpay"],
-    metric: "shipped end-to-end, solo",
-    accent: "peach",
+    metric: "SHIPPED SOLO, END-TO-END",
+    accent: "var(--neon-amber)",
     body: "Complete food-ordering system built alone: DB schema, CRUD API, JWT auth, and Razorpay integration with signature verification.",
   },
   {
@@ -82,8 +87,8 @@ const PROJECTS = [
     title: "SEO DOM Inspector",
     kind: "Chrome Extension",
     stack: ["React", "JavaScript", "Chrome APIs"],
-    metric: "15+ DOM signals · non-blocking",
-    accent: "lilac",
+    metric: "15+ DOM SIGNALS · NON-BLOCKING",
+    accent: "var(--neon-cyan)",
     body: "Browser extension inspecting structural DOM signals in real time without ever blocking the main thread.",
   },
 ];
@@ -105,463 +110,600 @@ const PATH = [
   { t: "2026", e: "MERN bootcamp — Error Makes Clever." },
 ];
 
-const TRACKS = [
-  { name: "midnight refactor", artist: "sleep.exe", len: "3:42" },
-  { name: "rain on the keycaps", artist: "lofi.dev", len: "4:08" },
-  { name: "coffee & closures", artist: "async waves", len: "2:57" },
+const MARQUEE = [
+  "REACT",
+  "TYPESCRIPT",
+  "MOTION",
+  "WEBGL",
+  "PERFORMANCE",
+  "DESIGN SYSTEMS",
+  "NODE",
+  "INTERFACE CRAFT",
 ];
 
-const STATUS = [
-  { k: "status", v: "open to work", tone: "mint" },
-  { k: "based", v: "Bengaluru, IN", tone: "lilac" },
-  { k: "focus", v: "React · TypeScript", tone: "peach" },
+const LINKS = [
+  { k: "EMAIL", v: "asmaan.dev@gmail.com", href: "mailto:asmaan.dev@gmail.com" },
+  { k: "GITHUB", v: "github.com/asmaan", href: "https://github.com" },
+  { k: "LINKEDIN", v: "in/mohamedasmaan", href: "https://linkedin.com" },
+  { k: "LOCATION", v: "Bengaluru, IN · UTC+5:30", href: null },
 ];
 
-/* ---------------- small pieces ---------------- */
+/* ---------------- primitives ---------------- */
 
-function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
+function useReduced() {
+  const [r, setR] = useState(false);
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    gsap.set(el, { opacity: 0, y: 26 });
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          gsap.to(el, { opacity: 1, y: 0, duration: 0.9, delay, ease: "power3.out" });
-          io.disconnect();
-        }
-      },
-      { threshold: 0.12 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [delay]);
-  return (
-    <div ref={ref} className={className}>
-      {children}
-    </div>
-  );
-}
-
-function SectionHead({ index, title, note }: { index: string; title: string; note: string }) {
-  return (
-    <div className="mb-8 flex flex-wrap items-end justify-between gap-3 border-b border-border pb-4">
-      <div className="flex items-baseline gap-3">
-        <span className="font-mono text-xs text-blurple">{index}</span>
-        <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h2>
-      </div>
-      <p className="font-mono text-xs text-muted-foreground">{note}</p>
-    </div>
-  );
-}
-
-function NowPlaying() {
-  const [i, setI] = useState(0);
-  const [playing, setPlaying] = useState(true);
-  useEffect(() => {
-    if (!playing) return;
-    const t = window.setInterval(() => setI((p) => (p + 1) % TRACKS.length), 9000);
-    return () => window.clearInterval(t);
-  }, [playing]);
-  const track = TRACKS[i];
-  return (
-    <div className="card-soft flex items-center gap-3 p-3">
-      <button
-        onClick={() => setPlaying((p) => !p)}
-        aria-label={playing ? "Pause the lo-fi mix" : "Play the lo-fi mix"}
-        className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-surface-2 text-mint transition-colors hover:bg-muted"
-      >
-        {playing ? "❙❙" : "▶"}
-      </button>
-      <div className="min-w-0 flex-1">
-        <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">now playing</p>
-        <p className="truncate text-sm font-medium">{track.name}</p>
-        <p className="truncate font-mono text-xs text-muted-foreground">
-          {track.artist} · {track.len}
-        </p>
-      </div>
-      <div className="eq flex h-4 items-end gap-[3px]" style={{ opacity: playing ? 1 : 0.25 }} aria-hidden>
-        <span /><span /><span /><span />
-      </div>
-    </div>
-  );
-}
-
-function useActiveSection() {
-  const [active, setActive] = useState("home");
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id);
-        });
-      },
-      { rootMargin: "-45% 0px -50% 0px" }
-    );
-    SECTIONS.forEach((s) => {
-      const el = document.getElementById(s.id);
-      if (el) io.observe(el);
-    });
-    return () => io.disconnect();
+    setR(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   }, []);
-  return active;
+  return r;
+}
+
+function SectionLabel({ index, title, tint = "var(--neon-cyan)" }: { index: string; title: string; tint?: string }) {
+  return (
+    <div className="mb-10 flex items-end justify-between gap-6 border-b border-border/60 pb-4">
+      <div className="flex items-baseline gap-4">
+        <span className="font-mono text-[0.65rem] tracking-[0.35em]" style={{ color: tint }}>
+          {index}
+        </span>
+        <h2 className="text-2xl font-semibold uppercase tracking-[0.18em] sm:text-3xl">{title}</h2>
+      </div>
+      <span className="hidden font-mono text-[0.6rem] tracking-[0.3em] text-muted-foreground sm:block">
+        // SECTOR ACTIVE
+      </span>
+    </div>
+  );
 }
 
 /* ---------------- page ---------------- */
 
 function Portfolio() {
-  const active = useActiveSection();
-  const [open, setOpen] = useState<string | null>("02");
-  const [time, setTime] = useState("");
+  const reduced = useReduced();
+  const [mounted, setMounted] = useState(false);
+  const [booted, setBooted] = useState(false);
+  const [clock, setClock] = useState("--:--:--");
+  const [active, setActive] = useState("home");
+  const rootRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
-    let id = 0;
-    const raf = (t: number) => {
-      lenis.raf(t);
-      id = requestAnimationFrame(raf);
-    };
-    id = requestAnimationFrame(raf);
-    return () => {
-      cancelAnimationFrame(id);
-      lenis.destroy();
-    };
-  }, []);
+  useEffect(() => setMounted(true), []);
 
+  /* clock */
   useEffect(() => {
     const tick = () =>
-      setTime(
+      setClock(
         new Intl.DateTimeFormat("en-GB", {
           hour: "2-digit",
           minute: "2-digit",
+          second: "2-digit",
           timeZone: "Asia/Kolkata",
         }).format(new Date())
       );
     tick();
-    const t = window.setInterval(tick, 20000);
-    return () => window.clearInterval(t);
+    const i = setInterval(tick, 1000);
+    return () => clearInterval(i);
   }, []);
 
-  const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  /* smooth scroll */
+  useEffect(() => {
+    if (reduced) return;
+    const lenis = new Lenis({ duration: 1.25, lerp: 0.09, wheelMultiplier: 1 });
+    let raf = 0;
+    const loop = (time: number) => {
+      lenis.raf(time);
+      ScrollTrigger.update();
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => {
+      cancelAnimationFrame(raf);
+      lenis.destroy();
+    };
+  }, [reduced]);
+
+  /* custom cursor */
+  useEffect(() => {
+    if (reduced || window.matchMedia("(pointer: coarse)").matches) return;
+    const dot = cursorRef.current;
+    const ring = ringRef.current;
+    if (!dot || !ring) return;
+    const qx = gsap.quickTo(dot, "x", { duration: 0.08, ease: "power3" });
+    const qy = gsap.quickTo(dot, "y", { duration: 0.08, ease: "power3" });
+    const rx = gsap.quickTo(ring, "x", { duration: 0.55, ease: "power3" });
+    const ry = gsap.quickTo(ring, "y", { duration: 0.55, ease: "power3" });
+    const move = (e: PointerEvent) => {
+      qx(e.clientX);
+      qy(e.clientY);
+      rx(e.clientX);
+      ry(e.clientY);
+      const hot = (e.target as HTMLElement)?.closest("a,button,[data-magnet]");
+      gsap.to(ring, { scale: hot ? 2.1 : 1, borderColor: hot ? "var(--neon-magenta)" : "var(--neon-cyan)", duration: 0.3 });
+    };
+    window.addEventListener("pointermove", move);
+    return () => window.removeEventListener("pointermove", move);
+  }, [reduced]);
+
+  /* boot + master timeline */
+  useEffect(() => {
+    if (reduced) {
+      setBooted(true);
+      return;
+    }
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ onComplete: () => setBooted(true) });
+      tl.to(".boot-line", { opacity: 1, stagger: 0.09, duration: 0.2 })
+        .to(".boot-bar", { scaleX: 1, duration: 0.9, ease: "power2.inOut" }, 0.1)
+        .to(".boot-screen", { opacity: 0, duration: 0.6, ease: "power2.inOut" }, "+=0.15")
+        .set(".boot-screen", { display: "none" })
+        .from(
+          ".hero-char",
+          { yPercent: 118, rotateX: -70, opacity: 0, stagger: 0.028, duration: 1.05, ease: "expo.out" },
+          "-=0.35"
+        )
+        .from(".hero-sub", { y: 24, opacity: 0, duration: 0.8, ease: "power3.out" }, "-=0.6")
+        .from(".hero-meta", { y: 18, opacity: 0, stagger: 0.08, duration: 0.6, ease: "power3.out" }, "-=0.5")
+        .from(".chrome", { opacity: 0, duration: 0.8 }, "-=0.7");
+
+      /* parallax hero out */
+      gsap.to(".hero-inner", {
+        yPercent: -18,
+        opacity: 0.15,
+        filter: "blur(6px)",
+        scrollTrigger: { trigger: "#home", start: "top top", end: "bottom top", scrub: true },
+      });
+
+      /* generic reveals */
+      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
+        gsap.from(el, {
+          y: 48,
+          opacity: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 88%" },
+        });
+      });
+
+      /* line draws */
+      gsap.utils.toArray<HTMLElement>("[data-line]").forEach((el) => {
+        gsap.from(el, {
+          scaleX: 0,
+          transformOrigin: "left center",
+          duration: 1.2,
+          ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 92%" },
+        });
+      });
+
+      /* horizontal project rail */
+      const rail = railRef.current;
+      const track = trackRef.current;
+      if (rail && track && window.innerWidth > 860) {
+        const dist = () => track.scrollWidth - window.innerWidth + 120;
+        gsap.to(track, {
+          x: () => -dist(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: rail,
+            start: "top top",
+            end: () => "+=" + dist(),
+            scrub: 1,
+            pin: true,
+            invalidateOnRefresh: true,
+          },
+        });
+        gsap.utils.toArray<HTMLElement>(".proj-card").forEach((card) => {
+          gsap.from(card, {
+            y: 60,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: { trigger: card, containerAnimation: undefined, start: "top 95%" },
+          });
+        });
+      }
+
+      /* timeline spine */
+      gsap.from(".spine", {
+        scaleY: 0,
+        transformOrigin: "top center",
+        ease: "none",
+        scrollTrigger: { trigger: "#path", start: "top 70%", end: "bottom 80%", scrub: true },
+      });
+
+      /* section observer */
+      SECTIONS.forEach((s) => {
+        ScrollTrigger.create({
+          trigger: "#" + s.id,
+          start: "top 45%",
+          end: "bottom 45%",
+          onToggle: (self) => self.isActive && setActive(s.id),
+        });
+      });
+    }, rootRef);
+
+    return () => ctx.revert();
+  }, [reduced]);
+
+  /* magnetic buttons */
+  useEffect(() => {
+    if (reduced) return;
+    const els = gsap.utils.toArray<HTMLElement>("[data-magnet]");
+    const cleanups = els.map((el) => {
+      const move = (e: MouseEvent) => {
+        const r = el.getBoundingClientRect();
+        gsap.to(el, {
+          x: (e.clientX - (r.left + r.width / 2)) * 0.28,
+          y: (e.clientY - (r.top + r.height / 2)) * 0.4,
+          duration: 0.5,
+          ease: "power3.out",
+        });
+      };
+      const leave = () => gsap.to(el, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1,0.4)" });
+      el.addEventListener("mousemove", move);
+      el.addEventListener("mouseleave", leave);
+      return () => {
+        el.removeEventListener("mousemove", move);
+        el.removeEventListener("mouseleave", leave);
+      };
+    });
+    return () => cleanups.forEach((c) => c());
+  }, [reduced, booted]);
+
+  const title = "ASMAAN";
 
   return (
-    <div className="grain min-h-screen">
-      {/* top status bar */}
-      <header className="sticky top-0 z-50 border-b border-border/70 bg-background/70 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-8">
-          <div className="flex items-center gap-3">
-            <span className="grid h-8 w-8 place-items-center rounded-xl bg-blurple font-mono text-sm font-bold text-primary-foreground">
-              ma
-            </span>
-            <div className="leading-tight">
-              <p className="text-sm font-semibold">M. Mohamed Asmaan</p>
-              <p className="font-mono text-[0.68rem] text-muted-foreground">frontend engineer</p>
-            </div>
-          </div>
-          <nav className="hidden items-center gap-1 md:flex">
-            {SECTIONS.map((s) => (
-              <button
-                key={s.id}
-                onClick={() => go(s.id)}
-                className={`rounded-lg px-3 py-1.5 font-mono text-xs transition-colors ${
-                  active === s.id ? "bg-surface-2 text-foreground" : "text-muted-foreground hover:bg-surface hover:text-foreground"
-                }`}
-              >
-                {s.label}
-              </button>
-            ))}
-          </nav>
-          <div className="hidden items-center gap-2 font-mono text-xs text-muted-foreground sm:flex">
-            <span className="h-2 w-2 rounded-full bg-mint" style={{ animation: "blink 2.4s infinite" }} />
-            IST {time}
+    <div ref={rootRef} className="relative min-h-screen scanlines noise md:cursor-none">
+      {/* WebGL atmosphere */}
+      <div className="fixed inset-0 z-0">
+        {mounted && (
+          <Suspense fallback={null}>
+            <CityScene />
+          </Suspense>
+        )}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_0%,transparent_20%,var(--background)_92%)]" />
+      </div>
+
+      {/* cursor */}
+      <div
+        ref={cursorRef}
+        className="pointer-events-none fixed left-0 top-0 z-[90] hidden h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan md:block"
+      />
+      <div
+        ref={ringRef}
+        className="pointer-events-none fixed left-0 top-0 z-[90] hidden h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border md:block"
+        style={{ borderColor: "var(--neon-cyan)" }}
+      />
+
+      {/* boot */}
+      <div className="boot-screen fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background px-6">
+        <div className="w-full max-w-sm font-mono text-[0.7rem] tracking-[0.18em] text-cyan">
+          {["INIT /interface.core", "MOUNT webgl.atmosphere", "LOAD asmaan.profile", "SYNC motion.engine", "READY"].map(
+            (l) => (
+              <div key={l} className="boot-line opacity-0">
+                <span className="text-magenta">▸</span> {l}
+              </div>
+            )
+          )}
+          <div className="mt-5 h-px w-full bg-border">
+            <div className="boot-bar h-px origin-left scale-x-0 bg-cyan" />
           </div>
         </div>
+      </div>
+
+      {/* chrome: side nav */}
+      <nav className="chrome fixed left-6 top-1/2 z-50 hidden -translate-y-1/2 flex-col gap-4 lg:flex">
+        {SECTIONS.map((s) => (
+          <a
+            key={s.id}
+            href={"#" + s.id}
+            className="group flex items-center gap-3 font-mono text-[0.6rem] uppercase tracking-[0.28em]"
+          >
+            <span
+              className="block h-px transition-all duration-500"
+              style={{
+                width: active === s.id ? 34 : 14,
+                background: active === s.id ? "var(--neon-magenta)" : "var(--border)",
+              }}
+            />
+            <span
+              className="transition-colors duration-300"
+              style={{ color: active === s.id ? "var(--neon-cyan)" : "var(--muted-foreground)" }}
+            >
+              {s.label}
+            </span>
+          </a>
+        ))}
+      </nav>
+
+      {/* chrome: top bar */}
+      <header className="chrome fixed inset-x-0 top-0 z-50 flex items-center justify-between px-5 py-4 font-mono text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground sm:px-8">
+        <span className="text-cyan">M.M. ASMAAN</span>
+        <span className="hidden sm:block">FRONTEND / REACT / MOTION</span>
+        <span className="flex items-center gap-2">
+          <span className="inline-block h-1.5 w-1.5 rounded-full bg-magenta" style={{ animation: "pulseDot 2s infinite" }} />
+          {clock} IST
+        </span>
       </header>
 
-      <div className="mx-auto max-w-6xl px-4 pb-24 sm:px-8">
-        {/* hero */}
-        <section id="home" className="grid gap-6 py-14 lg:grid-cols-[1.6fr_1fr] lg:py-20">
-          <Reveal className="card-soft relative overflow-hidden p-7 sm:p-10">
-            <div className="mb-6 flex items-center gap-2">
-              <span className="h-3 w-3 rounded-full bg-peach" />
-              <span className="h-3 w-3 rounded-full bg-mint" />
-              <span className="h-3 w-3 rounded-full bg-blurple" />
-              <span className="ml-2 font-mono text-xs text-muted-foreground">~/asmaan — workspace</span>
+      <main className="relative z-10">
+        {/* HERO */}
+        <section id="home" className="relative flex min-h-screen items-center px-5 sm:px-8 lg:px-24">
+          <div className="hero-inner w-full">
+            <div className="hero-meta mb-6 flex flex-wrap items-center gap-3">
+              <span className="tag">SECTOR 07 · BENGALURU</span>
+              <span className="tag" style={{ borderColor: "color-mix(in oklab, var(--neon-magenta) 35%, transparent)", color: "var(--neon-magenta)" }}>
+                AVAILABLE FOR WORK
+              </span>
             </div>
-            <p className="font-mono text-xs uppercase tracking-[0.28em] text-blurple">react · typescript · interfaces</p>
-            <h1 className="mt-4 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
-              I build calm software
-              <br />
-              <span className="text-lilac">that loads fast</span> and
-              <br />
-              feels effortless.
+
+            <h1
+              className="select-none text-[19vw] font-black leading-[0.82] tracking-tighter sm:text-[15vw] lg:text-[13vw]"
+              style={{ perspective: 800 }}
+            >
+              <span className="sr-only">M. Mohamed Asmaan</span>
+              <span aria-hidden="true" className="flex overflow-hidden">
+                {title.split("").map((c, i) => (
+                  <span key={i} className="hero-char inline-block neon-cyan-glow">
+                    {c}
+                  </span>
+                ))}
+              </span>
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
-              Frontend engineer in Bengaluru. I turn dense product requirements into interfaces people actually enjoy
-              using — accessible, responsive, and tuned down to the re-render.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button
-                onClick={() => go("projects")}
-                className="glow-blurple rounded-xl bg-blurple px-5 py-2.5 text-sm font-medium text-primary-foreground transition-transform hover:-translate-y-0.5"
-              >
-                See the work
-              </button>
-              <button
-                onClick={() => go("contact")}
-                className="rounded-xl border border-border bg-surface-2 px-5 py-2.5 text-sm font-medium transition-colors hover:bg-muted"
-              >
-                Say hello
-              </button>
-            </div>
-            <div className="mt-9 flex flex-wrap gap-2">
-              {STATUS.map((s) => (
-                <span key={s.k} className="chip">
-                  <span className="text-muted-foreground">{s.k}:</span>
-                  <span className={`text-${s.tone}`}>{s.v}</span>
-                </span>
-              ))}
-            </div>
-          </Reveal>
 
-          <div className="flex flex-col gap-6">
-            <Reveal delay={0.1}>
-              <NowPlaying />
-            </Reveal>
-            <Reveal delay={0.16} className="card-soft p-6">
-              <p className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">this week</p>
-              <div className="mt-4 space-y-4">
-                {[
-                  { k: "shipping", v: "component library v2", tone: "text-mint" },
-                  { k: "reading", v: "React reconciler internals", tone: "text-lilac" },
-                  { k: "learning", v: "MCA · SRM Institute", tone: "text-peach" },
-                ].map((r) => (
-                  <div key={r.k} className="flex items-baseline justify-between gap-3 border-b border-border/60 pb-3 last:border-0">
-                    <span className="font-mono text-xs text-muted-foreground">{r.k}</span>
-                    <span className={`text-right text-sm ${r.tone}`}>{r.v}</span>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
+            <div className="mt-6 max-w-2xl">
+              <p className="hero-sub text-base leading-relaxed text-muted-foreground sm:text-lg">
+                Frontend engineer building{" "}
+                <span className="text-foreground">motion-driven, production-grade React interfaces</span> — 900+ page
+                multilingual platforms, real-time conversational UIs, and 30% render-cost reductions.
+              </p>
+            </div>
+
+            <div className="hero-meta mt-10 flex flex-wrap items-center gap-4">
+              <a
+                data-magnet
+                href="#projects"
+                className="glass glass-hover inline-flex items-center gap-3 px-6 py-3 font-mono text-[0.7rem] uppercase tracking-[0.24em] text-cyan transition-colors"
+              >
+                ▸ Enter archive
+              </a>
+              <a
+                data-magnet
+                href="#contact"
+                className="inline-flex items-center gap-3 border-b border-magenta/50 pb-1 font-mono text-[0.7rem] uppercase tracking-[0.24em] text-magenta"
+              >
+                open uplink
+              </a>
+            </div>
+          </div>
+
+          <div className="chrome absolute bottom-8 right-5 hidden font-mono text-[0.58rem] uppercase tracking-[0.3em] text-muted-foreground sm:right-8 sm:block">
+            scroll ↓ to descend
           </div>
         </section>
 
-        {/* about */}
-        <section id="about" className="py-16">
-          <SectionHead index="01" title="readme.md" note="who's behind the keyboard" />
-          <div className="grid gap-6 lg:grid-cols-3">
-            <Reveal className="card-soft p-7 lg:col-span-2">
-              <div className="space-y-4 leading-relaxed text-muted-foreground">
-                <p>
-                  I&apos;m <span className="text-foreground">Asmaan</span> — a React engineer who cares about the boring
-                  parts: layout stability, keyboard access, bundle weight, and the 200ms that decide whether a product
-                  feels premium or cheap.
-                </p>
-                <p>
-                  At Alspark Solutions I own UI modules from Figma handoff through API integration to deploy. Outside
-                  work I build small tools, break things on purpose, and keep a lo-fi playlist running.
-                </p>
-                <p className="font-mono text-sm text-foreground">
-                  <span className="text-blurple">const</span> philosophy ={" "}
-                  <span className="text-peach">&quot;fewer elements, better motion, zero jank&quot;</span>;
-                </p>
+        {/* MARQUEE */}
+        <div className="relative z-10 overflow-hidden border-y border-border/50 bg-background/50 py-3 backdrop-blur">
+          <div className="marquee-track">
+            {[...MARQUEE, ...MARQUEE].map((m, i) => (
+              <span
+                key={i}
+                className="px-8 font-mono text-[0.68rem] uppercase tracking-[0.4em]"
+                style={{ color: i % 3 === 0 ? "var(--neon-magenta)" : "var(--muted-foreground)" }}
+              >
+                {m} <span className="text-cyan">✦</span>
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* ABOUT */}
+        <section id="about" className="px-5 py-28 sm:px-8 lg:px-24">
+          <SectionLabel index="01" title="Profile" />
+          <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
+            <div data-reveal className="space-y-5 text-lg leading-relaxed text-muted-foreground">
+              <p>
+                I'm <span className="text-foreground">M. Mohamed Asmaan</span>, a React engineer in Bengaluru. I build
+                interfaces where the engineering is invisible and the feel is not — fast paint, honest state, motion
+                that carries meaning.
+              </p>
+              <p>
+                Day to day that means owning UI modules from Figma handoff through REST integration to deploy, keeping
+                render costs low, and turning repeated patterns into component systems other engineers actually reuse.
+              </p>
+              <p className="font-mono text-sm text-cyan">
+                {">"} focus: React · TypeScript · performance · interaction design
+              </p>
+            </div>
+            <div data-reveal className="glass p-6">
+              <div className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
+                Runtime stats
               </div>
-            </Reveal>
-            <Reveal delay={0.1} className="card-soft p-7">
-              <div className="grid grid-cols-2 gap-5">
+              <div className="mt-5 space-y-4">
                 {[
-                  { n: "2.02M", l: "monthly impressions" },
-                  { n: "30%", l: "fewer re-renders" },
-                  { n: "900+", l: "pages shipped" },
-                  { n: "4+", l: "products in prod" },
-                ].map((s) => (
-                  <div key={s.l}>
-                    <p className="text-2xl font-semibold tracking-tight text-lilac">{s.n}</p>
-                    <p className="mt-1 font-mono text-[0.68rem] leading-snug text-muted-foreground">{s.l}</p>
+                  ["Impressions shipped", "2.02M / mo", "var(--neon-cyan)"],
+                  ["Render cost cut", "30%", "var(--neon-magenta)"],
+                  ["Pages at scale", "900+", "var(--neon-amber)"],
+                  ["Years in production", "2+", "var(--neon-cyan)"],
+                ].map(([k, v, c]) => (
+                  <div key={k} className="flex items-baseline justify-between border-b border-border/40 pb-2">
+                    <span className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">{k}</span>
+                    <span className="text-xl font-semibold" style={{ color: c }}>
+                      {v}
+                    </span>
                   </div>
                 ))}
               </div>
-            </Reveal>
+            </div>
           </div>
         </section>
 
-        {/* work */}
-        <section id="work" className="py-16">
-          <SectionHead index="02" title="where I work" note="current role" />
+        {/* EXPERIENCE */}
+        <section id="work" className="px-5 py-28 sm:px-8 lg:px-24">
+          <SectionLabel index="02" title="Service Record" tint="var(--neon-magenta)" />
           {EXPERIENCE.map((x) => (
-            <Reveal key={x.org} className="card-soft p-7">
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <div key={x.role} data-reveal className="glass glass-hover p-7 transition-all duration-500 sm:p-10">
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
                 <div>
-                  <h3 className="text-lg font-semibold">{x.role}</h3>
-                  <p className="font-mono text-sm text-blurple">{x.org}</p>
+                  <h3 className="text-2xl font-semibold">{x.role}</h3>
+                  <p className="mt-1 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-cyan">
+                    {x.org} · {x.loc}
+                  </p>
                 </div>
-                <p className="font-mono text-xs text-muted-foreground">
-                  {x.range} · {x.loc}
-                </p>
+                <span className="font-mono text-[0.65rem] tracking-[0.24em] text-magenta">{x.range}</span>
               </div>
-              <ul className="mt-5 space-y-3">
+              <div data-line className="hairline my-6" />
+              <ul className="space-y-3">
                 {x.bullets.map((b) => (
-                  <li key={b} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-mint" />
-                    {b}
+                  <li key={b} className="flex gap-3 text-muted-foreground">
+                    <span className="mt-1 font-mono text-xs text-magenta">▸</span>
+                    <span>{b}</span>
                   </li>
                 ))}
               </ul>
-            </Reveal>
+            </div>
           ))}
         </section>
 
-        {/* projects */}
-        <section id="projects" className="py-16">
-          <SectionHead index="03" title="selected projects" note="click a card to expand" />
-          <div className="grid gap-4 sm:grid-cols-2">
-            {PROJECTS.map((p, i) => {
-              const isOpen = open === p.id;
-              return (
-                <Reveal key={p.id} delay={i * 0.06}>
-                  <button
-                    onClick={() => setOpen(isOpen ? null : p.id)}
-                    aria-expanded={isOpen}
-                    className={`card-soft group w-full p-6 text-left transition-all duration-300 hover:-translate-y-1 ${
-                      isOpen ? "glow-blurple" : ""
-                    }`}
+        {/* PROJECTS — horizontal rail */}
+        <section id="projects" ref={railRef} className="relative overflow-hidden py-10">
+          <div className="px-5 sm:px-8 lg:px-24">
+            <SectionLabel index="03" title="Archive" tint="var(--neon-amber)" />
+          </div>
+          <div ref={trackRef} className="flex gap-6 px-5 sm:px-8 lg:px-24">
+            {PROJECTS.map((p) => (
+              <article
+                key={p.id}
+                className="proj-card glass glass-hover group relative flex w-[86vw] shrink-0 flex-col justify-between p-7 transition-all duration-500 sm:w-[62vw] lg:w-[38vw] lg:p-9"
+                style={{ minHeight: 420 }}
+              >
+                <div
+                  className="pointer-events-none absolute inset-x-0 top-0 h-px opacity-70"
+                  style={{ background: `linear-gradient(90deg, transparent, ${p.accent}, transparent)` }}
+                />
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[3.2rem] font-black leading-none opacity-15">{p.id}</span>
+                    <span className="tag" style={{ borderColor: p.accent, color: p.accent }}>
+                      {p.kind}
+                    </span>
+                  </div>
+                  <h3
+                    className="chroma mt-6 text-3xl font-bold leading-tight lg:text-4xl"
+                    data-text={p.title}
                   >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <p className="font-mono text-xs text-muted-foreground">{p.id}</p>
-                        <h3 className={`mt-1 text-lg font-semibold text-${p.accent}`}>{p.title}</h3>
-                        <p className="font-mono text-xs text-muted-foreground">{p.kind}</p>
-                      </div>
-                      <span className="font-mono text-xs text-muted-foreground transition-transform group-hover:translate-x-0.5">
-                        {isOpen ? "−" : "+"}
+                    {p.title}
+                  </h3>
+                  <p className="mt-4 leading-relaxed text-muted-foreground">{p.body}</p>
+                </div>
+                <div className="mt-8">
+                  <div className="flex flex-wrap gap-2">
+                    {p.stack.map((s) => (
+                      <span key={s} className="tag">
+                        {s}
                       </span>
-                    </div>
-                    <div
-                      className="grid transition-[grid-template-rows,opacity] duration-500"
-                      style={{ gridTemplateRows: isOpen ? "1fr" : "0fr", opacity: isOpen ? 1 : 0 }}
-                    >
-                      <div className="overflow-hidden">
-                        <p className="pt-4 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
-                      </div>
-                    </div>
-                    <div className="mt-5 flex flex-wrap items-center gap-2">
-                      {p.stack.map((s) => (
-                        <span key={s} className="chip">
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                    <p className="mt-4 font-mono text-xs text-mint">{p.metric}</p>
-                  </button>
-                </Reveal>
-              );
-            })}
+                    ))}
+                  </div>
+                  <div
+                    className="mt-5 font-mono text-[0.65rem] uppercase tracking-[0.24em]"
+                    style={{ color: p.accent }}
+                  >
+                    ◆ {p.metric}
+                  </div>
+                </div>
+              </article>
+            ))}
+            <div className="hidden w-24 shrink-0 lg:block" />
           </div>
         </section>
 
-        {/* stack */}
-        <section id="stack" className="py-16">
-          <SectionHead index="04" title="toolbox" note="what I reach for" />
+        {/* STACK */}
+        <section id="stack" className="px-5 py-28 sm:px-8 lg:px-24">
+          <SectionLabel index="04" title="Systems" />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {STACK.map((g, i) => (
-              <Reveal key={g.g} delay={i * 0.05} className="card-soft h-full p-6">
-                <p className="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-blurple">{g.g}</p>
+            {STACK.map((s) => (
+              <div key={s.g} data-reveal className="glass glass-hover p-6 transition-all duration-500">
+                <div className="font-mono text-[0.62rem] uppercase tracking-[0.3em] text-magenta">{s.g}</div>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {g.items.map((it) => (
-                    <span key={it} className="chip">
-                      {it}
+                  {s.items.map((i) => (
+                    <span key={i} className="text-sm text-muted-foreground">
+                      {i}
+                      <span className="px-2 text-cyan/40">/</span>
                     </span>
                   ))}
                 </div>
-              </Reveal>
+              </div>
             ))}
           </div>
         </section>
 
-        {/* path */}
-        <section id="path" className="py-16">
-          <SectionHead index="05" title="the path so far" note="commit history" />
-          <Reveal className="card-soft p-7">
-            <ol className="relative space-y-7 border-l border-border pl-7">
-              {PATH.map((p) => (
-                <li key={p.t + p.e} className="relative">
-                  <span className="absolute -left-[2.05rem] top-1.5 h-2.5 w-2.5 rounded-full bg-blurple ring-4 ring-background" />
-                  <p className="font-mono text-xs text-peach">{p.t}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{p.e}</p>
-                </li>
-              ))}
-            </ol>
-          </Reveal>
+        {/* PATH */}
+        <section id="path" className="px-5 py-28 sm:px-8 lg:px-24">
+          <SectionLabel index="05" title="Timeline" tint="var(--neon-magenta)" />
+          <div className="relative pl-8">
+            <div className="spine absolute left-[3px] top-1 h-full w-px bg-gradient-to-b from-cyan via-magenta to-transparent" />
+            {PATH.map((p) => (
+              <div key={p.t + p.e} data-reveal className="relative mb-9">
+                <span className="absolute -left-8 top-1.5 block h-[7px] w-[7px] rounded-full bg-cyan shadow-[0_0_14px_var(--neon-cyan)]" />
+                <div className="font-mono text-[0.65rem] tracking-[0.3em] text-magenta">{p.t}</div>
+                <div className="mt-1 text-lg text-foreground/90">{p.e}</div>
+              </div>
+            ))}
+          </div>
         </section>
 
-        {/* contact */}
-        <section id="contact" className="py-16">
-          <SectionHead index="06" title="say hello" note="replies within a day" />
-          <Reveal className="card-soft overflow-hidden">
-            <div className="grid gap-0 md:grid-cols-2">
-              <div className="p-8">
-                <h3 className="text-2xl font-semibold tracking-tight">
-                  Got a product that deserves a better interface?
-                </h3>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                  Freelance, full-time, or just a chat about React internals and good typography — my inbox is open.
-                </p>
-                <a
-                  href="mailto:asmaan@example.com"
-                  className="glow-blurple mt-7 inline-block rounded-xl bg-blurple px-5 py-2.5 text-sm font-medium text-primary-foreground transition-transform hover:-translate-y-0.5"
-                >
-                  asmaan@example.com
-                </a>
-              </div>
-              <div className="border-t border-border bg-surface-2/50 p-8 md:border-l md:border-t-0">
-                <p className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">elsewhere</p>
-                <ul className="mt-5 space-y-4 font-mono text-sm">
-                  {[
-                    { l: "github", v: "/asmaan", h: "https://github.com" },
-                    { l: "linkedin", v: "/in/asmaan", h: "https://linkedin.com" },
-                    { l: "location", v: "Bengaluru, India", h: null },
-                  ].map((r) => (
-                    <li key={r.l} className="flex items-baseline justify-between gap-3">
-                      <span className="text-muted-foreground">{r.l}</span>
-                      {r.h ? (
-                        <a href={r.h} target="_blank" rel="noreferrer" className="link-under text-lilac">
-                          {r.v}
-                        </a>
-                      ) : (
-                        <span className="text-foreground">{r.v}</span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+        {/* CONTACT */}
+        <section id="contact" className="px-5 pb-28 pt-20 sm:px-8 lg:px-24">
+          <SectionLabel index="06" title="Uplink" tint="var(--neon-amber)" />
+          <div data-reveal className="glass p-8 sm:p-14">
+            <h3 className="text-4xl font-black leading-[0.95] tracking-tight sm:text-6xl">
+              LET'S BUILD SOMETHING
+              <br />
+              <span className="text-magenta neon-mag-glow">WORTH LOOKING AT.</span>
+            </h3>
+            <div data-line className="hairline my-9" />
+            <div className="grid gap-6 sm:grid-cols-2">
+              {LINKS.map((l) =>
+                l.href ? (
+                  <a
+                    key={l.k}
+                    href={l.href}
+                    target={l.href.startsWith("http") ? "_blank" : undefined}
+                    rel="noreferrer"
+                    className="group flex items-center justify-between border-b border-border/50 pb-3 transition-colors hover:border-cyan"
+                  >
+                    <span className="font-mono text-[0.62rem] uppercase tracking-[0.3em] text-muted-foreground">
+                      {l.k}
+                    </span>
+                    <span className="text-base transition-colors group-hover:text-cyan">{l.v} ↗</span>
+                  </a>
+                ) : (
+                  <div key={l.k} className="flex items-center justify-between border-b border-border/50 pb-3">
+                    <span className="font-mono text-[0.62rem] uppercase tracking-[0.3em] text-muted-foreground">
+                      {l.k}
+                    </span>
+                    <span className="text-base text-muted-foreground">{l.v}</span>
+                  </div>
+                )
+              )}
             </div>
-          </Reveal>
+            <a
+              data-magnet
+              href="mailto:asmaan.dev@gmail.com"
+              className="mt-12 inline-flex items-center gap-3 bg-cyan px-8 py-4 font-mono text-[0.72rem] uppercase tracking-[0.26em] text-primary-foreground"
+            >
+              ▸ Transmit message
+            </a>
+          </div>
+
+          <footer className="mt-14 flex flex-wrap items-center justify-between gap-3 font-mono text-[0.58rem] uppercase tracking-[0.3em] text-muted-foreground">
+            <span>© {new Date().getFullYear()} M. MOHAMED ASMAAN</span>
+            <span>BUILT WITH REACT · GSAP · WEBGL</span>
+          </footer>
         </section>
-
-        <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-8 font-mono text-xs text-muted-foreground">
-          <span>© {new Date().getFullYear()} M. Mohamed Asmaan</span>
-          <span>built with react · tuned by ear</span>
-        </footer>
-      </div>
-
-      {/* mobile dock */}
-      <nav className="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-1 rounded-2xl border border-border bg-background/85 px-2 py-2 backdrop-blur-xl md:hidden">
-        {SECTIONS.map((s) => (
-          <button
-            key={s.id}
-            onClick={() => go(s.id)}
-            aria-label={s.label}
-            className={`grid h-9 w-9 place-items-center rounded-xl text-sm transition-colors ${
-              active === s.id ? "bg-blurple text-primary-foreground" : "text-muted-foreground"
-            }`}
-          >
-            {s.glyph}
-          </button>
-        ))}
-      </nav>
+      </main>
     </div>
   );
 }
