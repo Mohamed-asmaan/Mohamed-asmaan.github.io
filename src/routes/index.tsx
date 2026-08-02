@@ -704,6 +704,7 @@ function Portfolio() {
             <span>BUILT WITH REACT · GSAP · WEBGL</span>
           </footer>
         </section>
+        </div>
       </main>
     </div>
   );
