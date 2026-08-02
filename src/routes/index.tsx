@@ -484,7 +484,7 @@ function Portfolio() {
           </div>
         </section>
 
-        <div className="relative bg-background/80 backdrop-blur-[6px]">
+        <div className="relative bg-background/90 backdrop-blur-[3px]">
         {/* MARQUEE */}
         <div className="relative z-10 overflow-hidden border-y border-border/50 bg-background/50 py-3 backdrop-blur">
           <div className="marquee-track">
@@ -501,7 +501,7 @@ function Portfolio() {
         </div>
 
         {/* ABOUT */}
-        <section id="about" className="px-5 py-28 sm:px-8 lg:px-24">
+        <section id="about" className="px-5 py-28 sm:px-8 lg:pl-40 lg:pr-24">
           <SectionLabel index="01" title="Profile" />
           <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
             <div data-reveal className="space-y-5 text-lg leading-relaxed text-muted-foreground">
@@ -542,7 +542,7 @@ function Portfolio() {
         </section>
 
         {/* EXPERIENCE */}
-        <section id="work" className="px-5 py-28 sm:px-8 lg:px-24">
+        <section id="work" className="px-5 py-28 sm:px-8 lg:pl-40 lg:pr-24">
           <SectionLabel index="02" title="Service Record" tint="var(--neon-magenta)" />
           {EXPERIENCE.map((x) => (
             <div key={x.role} data-reveal className="glass glass-hover p-7 transition-all duration-500 sm:p-10">
@@ -570,10 +570,10 @@ function Portfolio() {
 
         {/* PROJECTS — horizontal rail */}
         <section id="projects" ref={railRef} className="relative overflow-hidden py-10">
-          <div className="px-5 sm:px-8 lg:px-24">
+          <div className="px-5 sm:px-8 lg:pl-40 lg:pr-24">
             <SectionLabel index="03" title="Archive" tint="var(--neon-amber)" />
           </div>
-          <div ref={trackRef} className="flex gap-6 px-5 sm:px-8 lg:px-24">
+          <div ref={trackRef} className="flex gap-6 px-5 sm:px-8 lg:pl-40 lg:pr-24">
             {PROJECTS.map((p) => (
               <article
                 key={p.id}
@@ -621,7 +621,7 @@ function Portfolio() {
         </section>
 
         {/* STACK */}
-        <section id="stack" className="px-5 py-28 sm:px-8 lg:px-24">
+        <section id="stack" className="px-5 py-28 sm:px-8 lg:pl-40 lg:pr-24">
           <SectionLabel index="04" title="Systems" />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {STACK.map((s) => (
@@ -641,7 +641,7 @@ function Portfolio() {
         </section>
 
         {/* PATH */}
-        <section id="path" className="px-5 py-28 sm:px-8 lg:px-24">
+        <section id="path" className="px-5 py-28 sm:px-8 lg:pl-40 lg:pr-24">
           <SectionLabel index="05" title="Timeline" tint="var(--neon-magenta)" />
           <div className="relative pl-8">
             <div className="spine absolute left-[3px] top-1 h-full w-px bg-gradient-to-b from-cyan via-magenta to-transparent" />
@@ -656,7 +656,7 @@ function Portfolio() {
         </section>
 
         {/* CONTACT */}
-        <section id="contact" className="px-5 pb-28 pt-20 sm:px-8 lg:px-24">
+        <section id="contact" className="px-5 pb-28 pt-20 sm:px-8 lg:pl-40 lg:pr-24">
           <SectionLabel index="06" title="Uplink" tint="var(--neon-amber)" />
           <div data-reveal className="glass p-8 sm:p-14">
             <h3 className="text-4xl font-black leading-[0.95] tracking-tight sm:text-6xl">
