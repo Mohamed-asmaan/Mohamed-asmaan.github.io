@@ -484,6 +484,7 @@ function Portfolio() {
           </div>
         </section>
 
+        <div className="relative bg-background/80 backdrop-blur-[6px]">
         {/* MARQUEE */}
         <div className="relative z-10 overflow-hidden border-y border-border/50 bg-background/50 py-3 backdrop-blur">
           <div className="marquee-track">
