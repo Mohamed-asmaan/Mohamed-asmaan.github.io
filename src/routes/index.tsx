@@ -90,6 +90,35 @@ const SKILLS = [
   },
 ];
 
+const TOOL_EMOJI: Record<string, string> = {
+  TypeScript: "⚡",
+  "JavaScript (ES6+)": "📜",
+  HTML: "🌐",
+  CSS: "🎨",
+  "SQL basics": "🗄️",
+  React: "⚛️",
+  "Redux Toolkit": "🔄",
+  "Node.js": "🟢",
+  Express: "🚂",
+  "Tailwind CSS": "🌊",
+  REST: "🔗",
+  GraphQL: "◈",
+  Firebase: "🔥",
+  MongoDB: "🍃",
+  "JWT / OTP auth": "🔐",
+  Vite: "⚡",
+  Webpack: "📦",
+  Git: "🌿",
+  Postman: "🚀",
+  "Chrome DevTools": "🔧",
+  Figma: "🎨",
+  "Data structures": "🧱",
+  "Event loop": "🔄",
+  Closures: "🔒",
+  "Async patterns": "⏳",
+  "Rendering performance": "🚀",
+};
+
 const EDUCATION = [
   { t: "2024 — Present", h: "MCA", s: "SRM Institute of Science and Technology" },
   { t: "2019 — 2023", h: "B.E. Computer Science", s: "Anna University, Chennai" },
