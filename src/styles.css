@@ -93,6 +93,34 @@
     color: var(--accent-red);
   }
 
+  .google-gradient {
+    background: linear-gradient(135deg, #4285f4 0%, #ea4335 35%, #fbbc05 67%, #34a853 100%);
+  }
+  .google-gradient-text {
+    background: linear-gradient(90deg, #4285f4, #ea4335, #fbbc05, #34a853);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .google-gradient-border {
+    position: relative;
+    isolation: isolate;
+  }
+  .google-gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #4285f4, #ea4335, #fbbc05, #34a853);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
   .card {
     background: var(--background);
     border: 1px solid var(--border);
