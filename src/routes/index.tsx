@@ -187,9 +187,28 @@ function useActiveSection() {
 function SectionTitle({ index, title, note }: { index: string; title: string; note?: string }) {
   return (
     <div className="mb-8 flex items-baseline gap-4 border-b border-border pb-4">
-      <span className="font-mono text-xs text-muted-foreground">{index}</span>
+      <span className="google-gradient-text font-mono text-xs font-semibold">{index}</span>
       <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
       {note ? <span className="ml-auto hidden font-mono text-xs text-muted-foreground sm:block">{note}</span> : null}
+    </div>
+  );
+}
+
+function SkillChip({ label }: { label: string }) {
+  return (
+    <span className="chip">
+      <span aria-hidden="true">{TOOL_EMOJI[label] ?? "▸"}</span>
+      <span>{label}</span>
+    </span>
+  );
+}
+
+function AvatarPlaceholder({ initials }: { initials: string }) {
+  return (
+    <div className="google-gradient-border relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full bg-surface shadow-sm sm:h-24 sm:w-24">
+      <div className="absolute inset-[2px] flex items-center justify-center rounded-full bg-background">
+        <span className="google-gradient-text text-2xl font-semibold sm:text-3xl">{initials}</span>
+      </div>
     </div>
   );
 }
@@ -253,10 +272,15 @@ function Portfolio() {
         {/* hero */}
         <section className="grid gap-10 py-20 md:grid-cols-[1.4fr_1fr] md:py-28">
           <div className="reveal">
-            <p className="font-mono text-xs text-muted-foreground">Software Engineer · Frontend</p>
-            <h1 className="mt-4 text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl">
-              M. Mohamed Asmaan
-            </h1>
+            <div className="flex items-center gap-5">
+              <AvatarPlaceholder initials="MA" />
+              <div>
+                <p className="font-mono text-xs text-muted-foreground">Software Engineer · Frontend</p>
+                <h1 className="mt-1 text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl">
+                  M. Mohamed Asmaan
+                </h1>
+              </div>
+            </div>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
               I build product interfaces in React and TypeScript — with a bias toward measurable performance,
               reusable systems, and details that hold up in production. Currently at Alspark Solutions in
@@ -265,7 +289,7 @@ function Portfolio() {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="#projects"
-                className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+                className="google-gradient rounded-md px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
               >
                 View projects
               </a>
@@ -347,9 +371,7 @@ function Portfolio() {
                 <p className="mt-4 font-mono text-xs text-green">{p.impact}</p>
                 <div className="mt-4 flex flex-wrap gap-1.5">
                   {p.stack.map((s) => (
-                    <span key={s} className="chip">
-                      {s}
-                    </span>
+                    <SkillChip key={s} label={s} />
                   ))}
                 </div>
               </article>
@@ -366,8 +388,8 @@ function Portfolio() {
                 <h3 className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">{s.g}</h3>
                 <ul className="mt-3 flex flex-wrap gap-1.5">
                   {s.items.map((i) => (
-                    <li key={i} className="chip">
-                      {i}
+                    <li key={i}>
+                      <SkillChip label={i} />
                     </li>
                   ))}
                 </ul>
@@ -404,7 +426,7 @@ function Portfolio() {
             <div className="mt-6 flex flex-wrap gap-3">
               <a
                 href={`mailto:${email}`}
-                className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+                className="google-gradient rounded-md px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
               >
                 {email}
               </a>
