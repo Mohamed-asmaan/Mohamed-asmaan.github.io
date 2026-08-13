@@ -388,8 +388,8 @@ function Portfolio() {
                 <h3 className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">{s.g}</h3>
                 <ul className="mt-3 flex flex-wrap gap-1.5">
                   {s.items.map((i) => (
-                    <li key={i} className="chip">
-                      {i}
+                    <li key={i}>
+                      <SkillChip label={i} />
                     </li>
                   ))}
                 </ul>
