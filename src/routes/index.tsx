@@ -272,10 +272,15 @@ function Portfolio() {
         {/* hero */}
         <section className="grid gap-10 py-20 md:grid-cols-[1.4fr_1fr] md:py-28">
           <div className="reveal">
-            <p className="font-mono text-xs text-muted-foreground">Software Engineer · Frontend</p>
-            <h1 className="mt-4 text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl">
-              M. Mohamed Asmaan
-            </h1>
+            <div className="flex items-center gap-5">
+              <AvatarPlaceholder initials="MA" />
+              <div>
+                <p className="font-mono text-xs text-muted-foreground">Software Engineer · Frontend</p>
+                <h1 className="mt-1 text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl">
+                  M. Mohamed Asmaan
+                </h1>
+              </div>
+            </div>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
               I build product interfaces in React and TypeScript — with a bias toward measurable performance,
               reusable systems, and details that hold up in production. Currently at Alspark Solutions in
@@ -284,7 +289,7 @@ function Portfolio() {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="#projects"
-                className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+                className="google-gradient rounded-md px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
               >
                 View projects
               </a>
