@@ -54,6 +54,41 @@
   --radius: 8px;
 }
 
+.dark {
+  --background: oklch(0.18 0.008 260);
+  --surface: oklch(0.215 0.009 260);
+  --surface-2: oklch(0.25 0.01 260);
+  --foreground: oklch(0.94 0.004 260);
+  --muted: oklch(0.24 0.008 260);
+  --muted-foreground: oklch(0.68 0.012 260);
+  --border: oklch(0.31 0.01 260);
+  --accent-blue: oklch(0.72 0.14 250);
+  --accent-green: oklch(0.72 0.14 150);
+  --accent-yellow: oklch(0.83 0.14 85);
+  --accent-red: oklch(0.68 0.17 27);
+  --on-primary: oklch(0.17 0.01 260);
+}
+
+.density-compact {
+  --dock-density: 1;
+}
+.density-compact main section {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.no-motion *,
+.no-motion *::before,
+.no-motion *::after {
+  animation: none !important;
+  transition: none !important;
+}
+.no-motion .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+
 @layer base {
   * {
     border-color: var(--border);
@@ -93,33 +128,33 @@
     color: var(--accent-red);
   }
 
-  .google-gradient {
-    background: linear-gradient(135deg, #4285f4 0%, #ea4335 35%, #fbbc05 67%, #34a853 100%);
-  }
-  .google-gradient-text {
-    background: linear-gradient(90deg, #4285f4, #ea4335, #fbbc05, #34a853);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .google-gradient-border {
+  /* Accent gradient — used sparingly, mostly as a hover-only 1px ring */
+  .grad-ring {
     position: relative;
     isolation: isolate;
   }
-  .google-gradient-border::before {
+  .grad-ring::before {
     content: "";
     position: absolute;
     inset: 0;
-    padding: 2px;
+    padding: 1px;
     border-radius: inherit;
-    background: linear-gradient(135deg, #4285f4, #ea4335, #fbbc05, #34a853);
+    background: linear-gradient(135deg, #4285f4, #34a853 45%, #fbbc05 75%, #ea4335);
     -webkit-mask:
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.2s ease;
     pointer-events: none;
   }
+  .grad-ring:hover::before,
+  .grad-ring:focus-visible::before,
+  .grad-ring[data-active="true"]::before {
+    opacity: 1;
+  }
+
 
   .card {
     background: var(--background);
