@@ -187,7 +187,7 @@ function useActiveSection() {
 function SectionTitle({ index, title, note }: { index: string; title: string; note?: string }) {
   return (
     <div className="mb-8 flex items-baseline gap-4 border-b border-border pb-4">
-      <span className="google-gradient-text font-mono text-xs font-semibold">{index}</span>
+      <span className="font-mono text-xs font-semibold text-muted-foreground">{index}</span>
       <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
       {note ? <span className="ml-auto hidden font-mono text-xs text-muted-foreground sm:block">{note}</span> : null}
     </div>
@@ -205,13 +205,12 @@ function SkillChip({ label }: { label: string }) {
 
 function AvatarPlaceholder({ initials }: { initials: string }) {
   return (
-    <div className="google-gradient-border relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full bg-surface shadow-sm sm:h-24 sm:w-24">
-      <div className="absolute inset-[2px] flex items-center justify-center rounded-full bg-background">
-        <span className="google-gradient-text text-2xl font-semibold sm:text-3xl">{initials}</span>
-      </div>
+    <div className="grad-ring relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-surface sm:h-24 sm:w-24">
+      <span className="text-2xl font-semibold text-muted-foreground sm:text-3xl">{initials}</span>
     </div>
   );
 }
+
 
 function Portfolio() {
   useReveal();
