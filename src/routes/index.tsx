@@ -371,9 +371,7 @@ function Portfolio() {
                 <p className="mt-4 font-mono text-xs text-green">{p.impact}</p>
                 <div className="mt-4 flex flex-wrap gap-1.5">
                   {p.stack.map((s) => (
-                    <span key={s} className="chip">
-                      {s}
-                    </span>
+                    <SkillChip key={s} label={s} />
                   ))}
                 </div>
               </article>
