@@ -1,5 +1,35 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import {
+  Atom,
+  Blocks,
+  Braces,
+  Circle,
+  Code2,
+  Database,
+  FileCode2,
+  Flame,
+  Gauge,
+  GitBranch,
+  Hexagon,
+  Hourglass,
+  KeyRound,
+  Leaf,
+  Lock,
+  Network,
+  Package,
+  Palette,
+  PenTool,
+  RefreshCw,
+  Repeat2,
+  Send,
+  Server,
+  Share2,
+  Wind,
+  Wrench,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
