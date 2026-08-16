@@ -1,5 +1,35 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import {
+  Atom,
+  Blocks,
+  Braces,
+  Circle,
+  Code2,
+  Database,
+  FileCode2,
+  Flame,
+  Gauge,
+  GitBranch,
+  Hexagon,
+  Hourglass,
+  KeyRound,
+  Leaf,
+  Lock,
+  Network,
+  Package,
+  Palette,
+  PenTool,
+  RefreshCw,
+  Repeat2,
+  Send,
+  Server,
+  Share2,
+  Wind,
+  Wrench,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -90,34 +120,35 @@ const SKILLS = [
   },
 ];
 
-const TOOL_EMOJI: Record<string, string> = {
-  TypeScript: "⚡",
-  "JavaScript (ES6+)": "📜",
-  HTML: "🌐",
-  CSS: "🎨",
-  "SQL basics": "🗄️",
-  React: "⚛️",
-  "Redux Toolkit": "🔄",
-  "Node.js": "🟢",
-  Express: "🚂",
-  "Tailwind CSS": "🌊",
-  REST: "🔗",
-  GraphQL: "◈",
-  Firebase: "🔥",
-  MongoDB: "🍃",
-  "JWT / OTP auth": "🔐",
-  Vite: "⚡",
-  Webpack: "📦",
-  Git: "🌿",
-  Postman: "🚀",
-  "Chrome DevTools": "🔧",
-  Figma: "🎨",
-  "Data structures": "🧱",
-  "Event loop": "🔄",
-  Closures: "🔒",
-  "Async patterns": "⏳",
-  "Rendering performance": "🚀",
+const TOOL_ICON: Record<string, LucideIcon> = {
+  TypeScript: FileCode2,
+  "JavaScript (ES6+)": Braces,
+  HTML: Code2,
+  CSS: Palette,
+  "SQL basics": Database,
+  React: Atom,
+  "Redux Toolkit": Repeat2,
+  "Node.js": Hexagon,
+  Express: Server,
+  "Tailwind CSS": Wind,
+  REST: Network,
+  GraphQL: Share2,
+  Firebase: Flame,
+  MongoDB: Leaf,
+  "JWT / OTP auth": KeyRound,
+  Vite: Zap,
+  Webpack: Package,
+  Git: GitBranch,
+  Postman: Send,
+  "Chrome DevTools": Wrench,
+  Figma: PenTool,
+  "Data structures": Blocks,
+  "Event loop": RefreshCw,
+  Closures: Lock,
+  "Async patterns": Hourglass,
+  "Rendering performance": Gauge,
 };
+
 
 const EDUCATION = [
   { t: "2024 — Present", h: "MCA", s: "SRM Institute of Science and Technology" },
@@ -195,9 +226,10 @@ function SectionTitle({ index, title, note }: { index: string; title: string; no
 }
 
 function SkillChip({ label }: { label: string }) {
+  const Icon = TOOL_ICON[label] ?? Circle;
   return (
-    <span className="chip">
-      <span aria-hidden="true">{TOOL_EMOJI[label] ?? "▸"}</span>
+    <span className="chip group grad-ring">
+      <Icon size={12} strokeWidth={1.75} className="text-muted-foreground transition-colors group-hover:text-foreground" aria-hidden="true" />
       <span>{label}</span>
     </span>
   );
