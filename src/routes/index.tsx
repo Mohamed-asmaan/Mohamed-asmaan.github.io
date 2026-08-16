@@ -320,7 +320,7 @@ function Portfolio() {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="#projects"
-                className="google-gradient rounded-md px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+                className="btn-primary"
               >
                 View projects
               </a>
@@ -457,7 +457,7 @@ function Portfolio() {
             <div className="mt-6 flex flex-wrap gap-3">
               <a
                 href={`mailto:${email}`}
-                className="google-gradient rounded-md px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+                className="btn-primary"
               >
                 {email}
               </a>

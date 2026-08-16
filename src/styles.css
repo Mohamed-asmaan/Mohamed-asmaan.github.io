@@ -128,7 +128,7 @@
     color: var(--accent-red);
   }
 
-  /* Accent gradient — used sparingly, mostly as a hover-only 1px ring */
+  /* Gemini-era accent gradient — restrained blue → indigo → violet */
   .grad-ring {
     position: relative;
     isolation: isolate;
@@ -139,7 +139,7 @@
     inset: 0;
     padding: 1px;
     border-radius: inherit;
-    background: linear-gradient(135deg, #4285f4, #34a853 45%, #fbbc05 75%, #ea4335);
+    background: linear-gradient(120deg, #4285f4, #7c6cf5 55%, #a56cf5);
     -webkit-mask:
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
@@ -154,6 +154,26 @@
   .grad-ring[data-active="true"]::before {
     opacity: 1;
   }
+
+  /* Primary action — solid ink with a faint gradient sheen */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-md);
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--on-primary);
+    background-image: linear-gradient(120deg, #4285f4, #6d5df6 60%, #9b6cf3);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+    transition: filter 0.2s ease, box-shadow 0.2s ease;
+  }
+  .btn-primary:hover {
+    filter: saturate(1.05) brightness(1.05);
+    box-shadow: 0 6px 18px -10px #4285f4;
+  }
+
 
 
   .card {
