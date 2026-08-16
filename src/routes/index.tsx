@@ -226,9 +226,10 @@ function SectionTitle({ index, title, note }: { index: string; title: string; no
 }
 
 function SkillChip({ label }: { label: string }) {
+  const Icon = TOOL_ICON[label] ?? Circle;
   return (
-    <span className="chip">
-      <span aria-hidden="true">{TOOL_EMOJI[label] ?? "▸"}</span>
+    <span className="chip group grad-ring">
+      <Icon size={12} strokeWidth={1.75} className="text-muted-foreground transition-colors group-hover:text-foreground" aria-hidden="true" />
       <span>{label}</span>
     </span>
   );
