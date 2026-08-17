@@ -1,35 +1,40 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import {
-  Atom,
-  Blocks,
-  Braces,
+  ArrowUpRight,
+  Check,
+  Copy,
   Circle,
-  Code2,
-  Database,
-  FileCode2,
-  Flame,
-  Gauge,
-  GitBranch,
-  Hexagon,
-  Hourglass,
-  KeyRound,
-  Leaf,
-  Lock,
-  Network,
-  Package,
-  Palette,
-  PenTool,
-  RefreshCw,
-  Repeat2,
-  Send,
-  Server,
-  Share2,
-  Wind,
-  Wrench,
-  Zap,
+  Mail,
+  MapPin,
+  Sparkles,
   type LucideIcon,
 } from "lucide-react";
+import {
+  SiChromewebstore,
+  SiCss3,
+  SiExpress,
+  SiFigma,
+  SiFirebase,
+  SiGit,
+  SiGithub,
+  SiGraphql,
+  SiHtml5,
+  SiJavascript,
+  SiJsonwebtokens,
+  SiLinkedin,
+  SiMongodb,
+  SiNodedotjs,
+  SiPostman,
+  SiReact,
+  SiRedux,
+  SiTailwindcss,
+  SiTypescript,
+  SiVite,
+  SiWebpack,
+  type IconType,
+} from "react-icons/si";
+import { TbApi, TbBinaryTree, TbBolt, TbDatabase, TbGauge, TbRefresh } from "react-icons/tb";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -104,7 +109,7 @@ const PROJECTS = [
     title: "SEO DOM Inspector",
     kind: "Chrome extension",
     impact: "15+ DOM signals, non-blocking",
-    stack: ["React", "JavaScript", "Chrome APIs"],
+    stack: ["React", "JavaScript (ES6+)", "Chrome APIs"],
     body: "Inspects structural DOM signals in real time from the extension surface without blocking the page's main thread.",
   },
 ];
@@ -113,42 +118,42 @@ const SKILLS = [
   { g: "Languages", items: ["TypeScript", "JavaScript (ES6+)", "HTML", "CSS", "SQL basics"] },
   { g: "Frameworks", items: ["React", "Redux Toolkit", "Node.js", "Express", "Tailwind CSS"] },
   { g: "Platform", items: ["REST", "GraphQL", "Firebase", "MongoDB", "JWT / OTP auth"] },
-  { g: "Tooling", items: ["Vite", "Webpack", "Git", "Postman", "Chrome DevTools", "Figma"] },
+  { g: "Tooling", items: ["Vite", "Webpack", "Git", "Postman", "Chrome APIs", "Figma"] },
   {
     g: "Fundamentals",
     items: ["Data structures", "Event loop", "Closures", "Async patterns", "Rendering performance"],
   },
 ];
 
-const TOOL_ICON: Record<string, LucideIcon> = {
-  TypeScript: FileCode2,
-  "JavaScript (ES6+)": Braces,
-  HTML: Code2,
-  CSS: Palette,
-  "SQL basics": Database,
-  React: Atom,
-  "Redux Toolkit": Repeat2,
-  "Node.js": Hexagon,
-  Express: Server,
-  "Tailwind CSS": Wind,
-  REST: Network,
-  GraphQL: Share2,
-  Firebase: Flame,
-  MongoDB: Leaf,
-  "JWT / OTP auth": KeyRound,
-  Vite: Zap,
-  Webpack: Package,
-  Git: GitBranch,
-  Postman: Send,
-  "Chrome DevTools": Wrench,
-  Figma: PenTool,
-  "Data structures": Blocks,
-  "Event loop": RefreshCw,
-  Closures: Lock,
-  "Async patterns": Hourglass,
-  "Rendering performance": Gauge,
+const TOOL_ICON: Record<string, IconType | LucideIcon> = {
+  TypeScript: SiTypescript,
+  "JavaScript (ES6+)": SiJavascript,
+  JavaScript: SiJavascript,
+  HTML: SiHtml5,
+  CSS: SiCss3,
+  "SQL basics": TbDatabase,
+  React: SiReact,
+  "Redux Toolkit": SiRedux,
+  "Node.js": SiNodedotjs,
+  Express: SiExpress,
+  "Tailwind CSS": SiTailwindcss,
+  REST: TbApi,
+  GraphQL: SiGraphql,
+  Firebase: SiFirebase,
+  MongoDB: SiMongodb,
+  "JWT / OTP auth": SiJsonwebtokens,
+  Vite: SiVite,
+  Webpack: SiWebpack,
+  Git: SiGit,
+  Postman: SiPostman,
+  "Chrome APIs": SiChromewebstore,
+  Figma: SiFigma,
+  "Data structures": TbBinaryTree,
+  "Event loop": TbRefresh,
+  Closures: TbBolt,
+  "Async patterns": TbBolt,
+  "Rendering performance": TbGauge,
 };
-
 
 const EDUCATION = [
   { t: "2024 — Present", h: "MCA", s: "SRM Institute of Science and Technology" },
@@ -162,6 +167,11 @@ const FACTS = [
   { k: "Focus", v: "Frontend systems" },
   { k: "Open to", v: "SWE roles" },
 ];
+
+const LINKS = {
+  github: "https://github.com/",
+  linkedin: "https://www.linkedin.com/",
+};
 
 /* ---------------- hooks ---------------- */
 
@@ -180,14 +190,15 @@ function useReveal() {
         entries.forEach((entry, i) => {
           if (!entry.isIntersecting) return;
           const el = entry.target as HTMLElement;
-          el.style.transition = "opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1)";
-          el.style.transitionDelay = `${Math.min(i, 6) * 60}ms`;
+          el.style.transition =
+            "opacity .55s cubic-bezier(.2,.7,.2,1), transform .55s cubic-bezier(.2,.7,.2,1)";
+          el.style.transitionDelay = `${Math.min(i, 6) * 55}ms`;
           el.style.opacity = "1";
           el.style.transform = "none";
           io.unobserve(el);
         });
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+      { rootMargin: "0px 0px -6% 0px", threshold: 0.06 },
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
@@ -199,7 +210,9 @@ function useActiveSection() {
   useEffect(() => {
     const io = new IntersectionObserver(
       (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
         if (visible[0]) setActive(visible[0].target.id);
       },
       { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 1] },
@@ -215,21 +228,20 @@ function useActiveSection() {
 
 /* ---------------- ui ---------------- */
 
-function SectionTitle({ index, title, note }: { index: string; title: string; note?: string }) {
+function SectionTitle({ title, note }: { title: string; note?: string }) {
   return (
-    <div className="mb-8 flex items-baseline gap-4 border-b border-border pb-4">
-      <span className="font-mono text-xs font-semibold text-muted-foreground">{index}</span>
-      <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
-      {note ? <span className="ml-auto hidden font-mono text-xs text-muted-foreground sm:block">{note}</span> : null}
+    <div className="mb-10 flex flex-wrap items-end gap-4">
+      <h2 className="g-underline text-2xl font-normal tracking-tight sm:text-[28px]">{title}</h2>
+      {note ? <span className="ml-auto text-xs text-muted-foreground">{note}</span> : null}
     </div>
   );
 }
 
 function SkillChip({ label }: { label: string }) {
-  const Icon = TOOL_ICON[label] ?? Circle;
+  const Icon = (TOOL_ICON[label] ?? Circle) as IconType;
   return (
-    <span className="chip group grad-ring">
-      <Icon size={12} strokeWidth={1.75} className="text-muted-foreground transition-colors group-hover:text-foreground" aria-hidden="true" />
+    <span className="chip">
+      <Icon size={13} aria-hidden="true" className="opacity-80" />
       <span>{label}</span>
     </span>
   );
@@ -237,12 +249,11 @@ function SkillChip({ label }: { label: string }) {
 
 function AvatarPlaceholder({ initials }: { initials: string }) {
   return (
-    <div className="grad-ring relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-surface sm:h-24 sm:w-24">
-      <span className="text-2xl font-semibold text-muted-foreground sm:text-3xl">{initials}</span>
+    <div className="grad-ring relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full bg-surface-2 sm:h-28 sm:w-28">
+      <span className="text-3xl font-normal text-muted-foreground">{initials}</span>
     </div>
   );
 }
-
 
 function Portfolio() {
   useReveal();
@@ -266,118 +277,148 @@ function Portfolio() {
     <div className="min-h-screen bg-background">
       <a
         href="#about"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-sm focus:text-primary-foreground"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:text-primary-foreground"
       >
         Skip to content
       </a>
 
       {/* header */}
-      <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-5xl items-center gap-6 px-6">
-          <a href="#top" className="font-mono text-sm font-medium tracking-tight">
+      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl">
+        <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-6">
+          <a href="#top" className="text-[15px] font-medium tracking-tight">
             asmaan<span className="text-muted-foreground">.dev</span>
           </a>
-          <nav className="ml-auto hidden items-center gap-1 md:flex">
+
+          <nav className="ml-auto hidden items-center gap-1 rounded-full bg-surface p-1 md:flex">
             {NAV.map((n) => (
               <a
                 key={n.id}
                 href={`#${n.id}`}
-                className={`rounded-md px-2.5 py-1.5 text-sm transition-colors ${
-                  active === n.id ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                className={`rounded-full px-3.5 py-1.5 text-[13px] transition-colors ${
+                  active === n.id
+                    ? "bg-primary-container text-on-primary-container"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {n.label}
               </a>
             ))}
           </nav>
-          <a
-            href={`mailto:${email}`}
-            className="ml-auto rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:border-primary hover:text-primary md:ml-0"
-          >
-            Get in touch
-          </a>
+
+          <div className="ml-auto flex items-center gap-1 md:ml-2">
+            <a
+              href={LINKS.github}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="GitHub"
+              className="grad-ring flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground"
+            >
+              <SiGithub size={17} />
+            </a>
+            <a
+              href={LINKS.linkedin}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="LinkedIn"
+              className="grad-ring flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground"
+            >
+              <SiLinkedin size={17} />
+            </a>
+            <a href={`mailto:${email}`} className="m3-filled ml-2 hidden !py-2 sm:inline-flex">
+              <Mail size={16} />
+              Get in touch
+            </a>
+          </div>
         </div>
       </header>
 
-      <main id="top" className="mx-auto max-w-5xl px-6">
+      <main id="top" className="mx-auto max-w-6xl px-6">
         {/* hero */}
-        <section className="grid gap-10 py-20 md:grid-cols-[1.4fr_1fr] md:py-28">
-          <div className="reveal">
-            <div className="flex items-center gap-5">
+        <section className="grid items-start gap-6 py-16 md:grid-cols-3 md:py-24">
+          <div className="reveal card md:col-span-2 p-8 sm:p-10">
+            <div className="flex flex-wrap items-center gap-6">
               <AvatarPlaceholder initials="MA" />
-              <div>
-                <p className="font-mono text-xs text-muted-foreground">Software Engineer · Frontend</p>
-                <h1 className="mt-1 text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl">
+              <div className="min-w-0">
+                <span className="chip">
+                  <Sparkles size={13} className="text-blue" />
+                  Available for SWE roles
+                </span>
+                <h1 className="mt-3 text-4xl font-normal leading-[1.08] tracking-tight sm:text-[52px]">
                   M. Mohamed Asmaan
                 </h1>
+                <p className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
+                  Software Engineer · Frontend
+                  <span className="inline-flex items-center gap-1">
+                    <MapPin size={13} /> Bengaluru
+                  </span>
+                </p>
               </div>
             </div>
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
-              I build product interfaces in React and TypeScript — with a bias toward measurable performance,
-              reusable systems, and details that hold up in production. Currently at Alspark Solutions in
-              Bengaluru.
+
+            <p className="mt-8 max-w-2xl text-[17px] leading-8 text-muted-foreground">
+              I build product interfaces in React and TypeScript — with a bias toward measurable
+              performance, reusable systems, and details that hold up in production. Currently at
+              Alspark Solutions.
             </p>
+
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href="#projects"
-                className="btn-primary"
-              >
+              <a href="#projects" className="m3-filled">
                 View projects
+                <ArrowUpRight size={16} />
               </a>
-              <button
-                onClick={copyEmail}
-                className="rounded-md border border-border px-4 py-2 text-sm transition-colors hover:border-primary hover:text-primary"
-              >
+              <button onClick={copyEmail} className="m3-outlined">
+                {copied ? <Check size={16} className="text-green" /> : <Copy size={16} />}
                 {copied ? "Email copied" : "Copy email"}
               </button>
             </div>
           </div>
 
-          <dl className="reveal grid grid-cols-2 gap-px self-start overflow-hidden rounded-xl border border-border bg-border md:grid-cols-1">
+          <dl className="reveal grid grid-cols-2 gap-3 md:grid-cols-1">
             {FACTS.map((f) => (
-              <div key={f.k} className="bg-background px-4 py-3">
-                <dt className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">{f.k}</dt>
-                <dd className="mt-1 text-sm">{f.v}</dd>
+              <div key={f.k} className="card card-hover px-5 py-4">
+                <dt className="text-[11px] uppercase tracking-[0.08em] text-muted-foreground">{f.k}</dt>
+                <dd className="mt-1 text-[15px]">{f.v}</dd>
               </div>
             ))}
           </dl>
         </section>
 
         {/* about */}
-        <section id="about" className="scroll-mt-20 py-16">
-          <SectionTitle index="01" title="About" />
-          <div className="grid gap-8 md:grid-cols-2">
-            <p className="reveal text-sm leading-7 text-muted-foreground">
-              I started with computer science fundamentals and moved into frontend because it is where correctness
-              and craft meet the user directly. Most of my work sits between design and infrastructure: turning
-              specs into components, wiring them to APIs, and keeping the render path fast as the product grows.
+        <section id="about" className="scroll-mt-24 py-16">
+          <SectionTitle title="About" />
+          <div className="grid gap-6 md:grid-cols-2">
+            <p className="reveal card-outlined p-7 text-[15px] leading-8 text-muted-foreground">
+              I started with computer science fundamentals and moved into frontend because it is where
+              correctness and craft meet the user directly. Most of my work sits between design and
+              infrastructure: turning specs into components, wiring them to APIs, and keeping the render
+              path fast as the product grows.
             </p>
-            <p className="reveal text-sm leading-7 text-muted-foreground">
-              I care about the parts that are easy to skip — loading and error states, keyboard access, bundle
-              size, and the profiler numbers behind &quot;it feels slow&quot;. I&apos;m currently completing an MCA
-              alongside full-time engineering work.
+            <p className="reveal card-outlined p-7 text-[15px] leading-8 text-muted-foreground">
+              I care about the parts that are easy to skip — loading and error states, keyboard access,
+              bundle size, and the profiler numbers behind &quot;it feels slow&quot;. I&apos;m currently
+              completing an MCA alongside full-time engineering work.
             </p>
           </div>
         </section>
 
         {/* experience */}
-        <section id="experience" className="scroll-mt-20 py-16">
-          <SectionTitle index="02" title="Experience" note="2024 — present" />
-          <div className="space-y-8">
+        <section id="experience" className="scroll-mt-24 py-16">
+          <SectionTitle title="Experience" note="2024 — present" />
+          <div className="space-y-6">
             {EXPERIENCE.map((e) => (
-              <article key={e.org} className="reveal grid gap-4 md:grid-cols-[160px_1fr]">
-                <div className="font-mono text-xs text-muted-foreground">
+              <article key={e.org} className="reveal card grid gap-6 p-8 md:grid-cols-[180px_1fr]">
+                <div className="text-xs text-muted-foreground">
                   <div>{e.range}</div>
                   <div className="mt-1">{e.loc}</div>
                 </div>
                 <div>
-                  <h3 className="text-base font-medium tracking-tight">
+                  <h3 className="text-lg font-normal tracking-tight">
                     {e.role} <span className="text-muted-foreground">· {e.org}</span>
                   </h3>
-                  <ul className="mt-3 space-y-2">
+                  <ul className="mt-4 space-y-3">
                     {e.bullets.map((b) => (
-                      <li key={b} className="flex gap-3 text-sm leading-6 text-muted-foreground">
-                        <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary" />
+                      <li key={b} className="flex gap-3 text-[15px] leading-7 text-muted-foreground">
+                        <span aria-hidden className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                         <span>{b}</span>
                       </li>
                     ))}
@@ -389,18 +430,19 @@ function Portfolio() {
         </section>
 
         {/* projects */}
-        <section id="projects" className="scroll-mt-20 py-16">
-          <SectionTitle index="03" title="Selected projects" note={`${PROJECTS.length} shipped`} />
+        <section id="projects" className="scroll-mt-24 py-16">
+          <SectionTitle title="Selected projects" note={`${PROJECTS.length} shipped`} />
           <div className="grid gap-4 sm:grid-cols-2">
             {PROJECTS.map((p) => (
-              <article key={p.title} className="reveal card card-hover flex flex-col p-5">
+              <article key={p.title} className="reveal card card-hover flex flex-col p-7">
                 <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-base font-medium tracking-tight">{p.title}</h3>
-                  <span className="font-mono text-[11px] text-muted-foreground">{p.kind}</span>
+                  <h3 className="text-lg font-normal tracking-tight">{p.title}</h3>
+                  <ArrowUpRight size={16} className="mt-1 shrink-0 text-muted-foreground" />
                 </div>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">{p.body}</p>
-                <p className="mt-4 font-mono text-xs text-green">{p.impact}</p>
-                <div className="mt-4 flex flex-wrap gap-1.5">
+                <p className="mt-1 text-xs text-muted-foreground">{p.kind}</p>
+                <p className="mt-4 text-[15px] leading-7 text-muted-foreground">{p.body}</p>
+                <p className="mt-5 text-sm text-green">{p.impact}</p>
+                <div className="mt-5 flex flex-wrap gap-2">
                   {p.stack.map((s) => (
                     <SkillChip key={s} label={s} />
                   ))}
@@ -411,13 +453,13 @@ function Portfolio() {
         </section>
 
         {/* skills */}
-        <section id="skills" className="scroll-mt-20 py-16">
-          <SectionTitle index="04" title="Skills" />
-          <div className="grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2">
+        <section id="skills" className="scroll-mt-24 py-16">
+          <SectionTitle title="Skills" />
+          <div className="grid gap-4 sm:grid-cols-2">
             {SKILLS.map((s) => (
-              <div key={s.g} className="reveal bg-background p-5">
-                <h3 className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">{s.g}</h3>
-                <ul className="mt-3 flex flex-wrap gap-1.5">
+              <div key={s.g} className="reveal card p-7">
+                <h3 className="text-[11px] uppercase tracking-[0.08em] text-muted-foreground">{s.g}</h3>
+                <ul className="mt-4 flex flex-wrap gap-2">
                   {s.items.map((i) => (
                     <li key={i}>
                       <SkillChip label={i} />
@@ -430,14 +472,14 @@ function Portfolio() {
         </section>
 
         {/* education */}
-        <section id="education" className="scroll-mt-20 py-16">
-          <SectionTitle index="05" title="Education" />
-          <ul className="space-y-4">
+        <section id="education" className="scroll-mt-24 py-16">
+          <SectionTitle title="Education" />
+          <ul className="reveal card divide-y divide-border overflow-hidden">
             {EDUCATION.map((e) => (
-              <li key={e.h} className="reveal grid gap-2 border-b border-border pb-4 md:grid-cols-[160px_1fr]">
-                <span className="font-mono text-xs text-muted-foreground">{e.t}</span>
-                <span className="text-sm">
-                  <span className="font-medium">{e.h}</span>
+              <li key={e.h} className="grid gap-2 px-7 py-5 md:grid-cols-[180px_1fr]">
+                <span className="text-xs text-muted-foreground">{e.t}</span>
+                <span className="text-[15px]">
+                  {e.h}
                   <span className="text-muted-foreground"> · {e.s}</span>
                 </span>
               </li>
@@ -446,35 +488,27 @@ function Portfolio() {
         </section>
 
         {/* contact */}
-        <section id="contact" className="scroll-mt-20 py-16 pb-24">
-          <SectionTitle index="06" title="Contact" note="open to opportunities" />
-          <div className="reveal card p-8">
-            <h3 className="text-2xl font-semibold tracking-tight">Let&apos;s build something dependable.</h3>
-            <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground">
-              I&apos;m open to frontend and full-stack engineering roles, and happy to talk through interface
-              architecture, performance work, or a specific problem you&apos;re stuck on.
+        <section id="contact" className="scroll-mt-24 py-16 pb-28">
+          <SectionTitle title="Contact" note="open to opportunities" />
+          <div className="reveal card p-9 sm:p-12">
+            <h3 className="max-w-xl text-3xl font-normal leading-tight tracking-tight">
+              Let&apos;s build something dependable.
+            </h3>
+            <p className="mt-4 max-w-xl text-[15px] leading-8 text-muted-foreground">
+              I&apos;m open to frontend and full-stack engineering roles, and happy to talk through
+              interface architecture, performance work, or a specific problem you&apos;re stuck on.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a
-                href={`mailto:${email}`}
-                className="btn-primary"
-              >
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href={`mailto:${email}`} className="m3-filled">
+                <Mail size={16} />
                 {email}
               </a>
-              <a
-                href="https://github.com/"
-                target="_blank"
-                rel="noreferrer noopener"
-                className="rounded-md border border-border px-4 py-2 text-sm transition-colors hover:border-primary hover:text-primary"
-              >
+              <a href={LINKS.github} target="_blank" rel="noreferrer noopener" className="m3-outlined">
+                <SiGithub size={16} />
                 GitHub
               </a>
-              <a
-                href="https://www.linkedin.com/"
-                target="_blank"
-                rel="noreferrer noopener"
-                className="rounded-md border border-border px-4 py-2 text-sm transition-colors hover:border-primary hover:text-primary"
-              >
+              <a href={LINKS.linkedin} target="_blank" rel="noreferrer noopener" className="m3-outlined">
+                <SiLinkedin size={16} />
                 LinkedIn
               </a>
             </div>
@@ -482,10 +516,10 @@ function Portfolio() {
         </section>
       </main>
 
-      <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-5xl flex-col gap-2 px-6 py-8 text-xs text-muted-foreground sm:flex-row sm:items-center">
-          <span className="font-mono">© {yearRef.current} M. Mohamed Asmaan</span>
-          <span className="font-mono sm:ml-auto">Built with React, TypeScript & Tailwind</span>
+      <footer className="mx-auto max-w-6xl px-6">
+        <div className="flex flex-col gap-2 border-t border-border py-8 text-xs text-muted-foreground sm:flex-row sm:items-center">
+          <span>© {yearRef.current} M. Mohamed Asmaan</span>
+          <span className="sm:ml-auto">Built with React, TypeScript &amp; Tailwind</span>
         </div>
       </footer>
     </div>
