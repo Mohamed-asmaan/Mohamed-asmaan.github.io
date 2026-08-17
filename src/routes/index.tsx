@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import {
   SiChromewebstore,
-  SiCss3,
+  SiCss,
   SiExpress,
   SiFigma,
   SiFirebase,
@@ -22,7 +22,6 @@ import {
   SiHtml5,
   SiJavascript,
   SiJsonwebtokens,
-  SiLinkedin,
   SiMongodb,
   SiNodedotjs,
   SiPostman,
@@ -32,8 +31,9 @@ import {
   SiTypescript,
   SiVite,
   SiWebpack,
-  type IconType,
 } from "react-icons/si";
+import { FaLinkedin as SiLinkedin } from "react-icons/fa6";
+import type { IconType } from "react-icons";
 import { TbApi, TbBinaryTree, TbBolt, TbDatabase, TbGauge, TbRefresh } from "react-icons/tb";
 
 export const Route = createFileRoute("/")({
@@ -130,7 +130,7 @@ const TOOL_ICON: Record<string, IconType | LucideIcon> = {
   "JavaScript (ES6+)": SiJavascript,
   JavaScript: SiJavascript,
   HTML: SiHtml5,
-  CSS: SiCss3,
+  CSS: SiCss,
   "SQL basics": TbDatabase,
   React: SiReact,
   "Redux Toolkit": SiRedux,
