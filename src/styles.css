@@ -303,7 +303,101 @@
     opacity: 0;
     transform: translateY(14px);
   }
-}
+
+  /* top scroll progress — the only place all four Google colours appear */
+  .scroll-progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 2px;
+    z-index: 60;
+    transform-origin: 0 50%;
+    background: linear-gradient(90deg, #4285f4, #ea4335 35%, #fbbc05 68%, #34a853);
+    will-change: transform;
+  }
+
+  /* soft ambient light behind the hero */
+  .aura {
+    position: absolute;
+    inset: -20% -10% auto -10%;
+    height: 460px;
+    pointer-events: none;
+    z-index: -1;
+    background:
+      radial-gradient(46% 60% at 18% 20%, color-mix(in oklab, #4285f4 22%, transparent), transparent 70%),
+      radial-gradient(40% 55% at 78% 8%, color-mix(in oklab, #34a853 16%, transparent), transparent 72%),
+      radial-gradient(38% 50% at 52% 44%, color-mix(in oklab, #fbbc05 12%, transparent), transparent 70%);
+    filter: blur(18px);
+    opacity: 0.75;
+    animation: aura-drift 18s ease-in-out infinite alternate;
+  }
+  @keyframes aura-drift {
+    from {
+      transform: translate3d(-2%, -1%, 0) scale(1);
+    }
+    to {
+      transform: translate3d(3%, 2%, 0) scale(1.06);
+    }
+  }
+
+  /* cursor-following highlight on cards */
+  .spotlight {
+    position: relative;
+    overflow: hidden;
+  }
+  .spotlight::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: radial-gradient(
+      260px circle at var(--mx, 50%) var(--my, 50%),
+      color-mix(in oklab, var(--accent-blue) 14%, transparent),
+      transparent 62%
+    );
+  }
+  .spotlight:hover::after {
+    opacity: 1;
+  }
+
+  /* rotating role words */
+  .rotator {
+    display: inline-grid;
+    overflow: hidden;
+    vertical-align: bottom;
+  }
+  .rotator > span {
+    grid-area: 1 / 1;
+    animation: rotate-word 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  @keyframes rotate-word {
+    0% {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    12%,
+    100% {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .idx {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted-foreground);
+  }
+
+  .arrow-slide {
+    transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .group:hover .arrow-slide {
+    transform: translate(3px, -3px);
+  }
+
 
 @media (prefers-reduced-motion: reduce) {
   * {
