@@ -4,6 +4,8 @@ Personal site of **M. Mohamed Asmaan**, a frontend developer in Bengaluru.
 
 **Live:** https://mohamed-asmaan.github.io/
 
+GitHub Pages serves the production build from the `docs/` folder on `main`.
+
 React · TypeScript · Vite · Tailwind CSS
 
 ## Run locally
