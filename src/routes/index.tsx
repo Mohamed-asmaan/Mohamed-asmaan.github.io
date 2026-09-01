@@ -290,7 +290,7 @@ function Portfolio() {
   const [copied, setCopied] = useState(false);
   const yearRef = useRef(new Date().getFullYear());
 
-  const email = "asmaan.dev@gmail.com";
+  const email = "asmaan011@gmail.com";
 
   const copyEmail = async () => {
     try {
@@ -376,7 +376,7 @@ function Portfolio() {
                   M. Mohamed Asmaan
                 </h1>
                 <p className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
-                  Software Engineer · Frontend
+                   Frontend Developer · React, JavaScript, TypeScript
                   <span className="inline-flex items-center gap-1">
                     <MapPin size={13} /> Bengaluru
                   </span>
@@ -385,9 +385,9 @@ function Portfolio() {
             </div>
 
             <p className="mt-8 max-w-2xl text-[17px] leading-8 text-muted-foreground">
-              I build product interfaces in React and TypeScript — with a bias toward measurable
-              performance, reusable systems, and details that hold up in production. Currently at
-              Alspark Solutions.
+              I build responsive product interfaces with React and JavaScript — with a bias toward
+              reusable components, reliable API integration, and details that hold up in production.
+              Currently a Frontend Developer at Alspark Solutions.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -418,21 +418,22 @@ function Portfolio() {
           <div className="grid gap-6 md:grid-cols-2">
             <p className="reveal card-outlined p-7 text-[15px] leading-8 text-muted-foreground">
               I started with computer science fundamentals and moved into frontend because it is where
-              correctness and craft meet the user directly. Most of my work sits between design and
-              infrastructure: turning specs into components, wiring them to APIs, and keeping the render
-              path fast as the product grows.
+              correctness and craft meet the user directly. Over two years at Alspark Solutions, I
+              progressed from intern to Low-Code Web Developer and then Frontend Developer, working
+              across production websites and React applications.
             </p>
             <p className="reveal card-outlined p-7 text-[15px] leading-8 text-muted-foreground">
-              I care about the parts that are easy to skip — loading and error states, keyboard access,
-              bundle size, and the profiler numbers behind &quot;it feels slow&quot;. I&apos;m currently
-              completing an MCA alongside full-time engineering work.
+              I care about the parts that are easy to skip — loading and error states, responsive
+              behavior, bundle size, and the profiler numbers behind &quot;it feels slow&quot;. My toolkit
+              spans React, Next.js, TypeScript, Redux Toolkit, REST APIs, testing, and performance
+              optimisation.
             </p>
           </div>
         </section>
 
         {/* experience */}
         <section id="experience" className="scroll-mt-24 py-16">
-          <SectionTitle title="Experience" note="2024 — present" />
+          <SectionTitle title="Experience" note="Nov 2023 — present" />
           <div className="space-y-6">
             {EXPERIENCE.map((e) => (
               <article key={e.org} className="reveal card grid gap-6 p-8 md:grid-cols-[180px_1fr]">
@@ -524,8 +525,8 @@ function Portfolio() {
               Let&apos;s build something dependable.
             </h3>
             <p className="mt-4 max-w-xl text-[15px] leading-8 text-muted-foreground">
-              I&apos;m open to frontend and full-stack engineering roles, and happy to talk through
-              interface architecture, performance work, or a specific problem you&apos;re stuck on.
+              I&apos;m open to frontend developer and software engineering roles, and happy to talk
+              through interface architecture, performance work, or a specific product problem.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a href={`mailto:${email}`} className="m3-filled">
