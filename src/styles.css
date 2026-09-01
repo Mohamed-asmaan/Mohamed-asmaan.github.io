@@ -398,6 +398,7 @@
     transform: translate(3px, -3px);
   }
 
+}
 
 @media (prefers-reduced-motion: reduce) {
   * {
