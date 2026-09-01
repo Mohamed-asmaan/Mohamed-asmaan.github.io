@@ -1,6 +1,4 @@
-@import "tailwindcss" source(none);
-@source "../src";
-@import "tw-animate-css";
+@import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -44,7 +42,6 @@
   --radius-xl: 28px;
 }
 
-/* Material 3 light scheme, Google blue source colour */
 :root {
   --background: oklch(0.994 0.002 260);
   --surface: oklch(0.975 0.004 260);
@@ -56,12 +53,12 @@
   --border: oklch(0.905 0.006 260);
   --outline: oklch(0.86 0.008 260);
 
-  --accent-blue: oklch(0.51 0.19 262); /* #0b57d0 */
+  --accent-blue: oklch(0.51 0.19 262);
   --primary-container: oklch(0.92 0.045 260);
   --on-primary-container: oklch(0.33 0.14 262);
-  --accent-green: oklch(0.56 0.14 152); /* #188038 */
-  --accent-yellow: oklch(0.79 0.15 82); /* #f9ab00 */
-  --accent-red: oklch(0.57 0.2 27); /* #d93025 */
+  --accent-green: oklch(0.56 0.14 152);
+  --accent-yellow: oklch(0.79 0.15 82);
+  --accent-red: oklch(0.57 0.2 27);
   --on-primary: oklch(1 0 0);
   --radius: 16px;
 }
@@ -77,29 +74,13 @@
   --border: oklch(0.32 0.012 265);
   --outline: oklch(0.38 0.014 265);
 
-  --accent-blue: oklch(0.78 0.12 250); /* #a8c7fa */
+  --accent-blue: oklch(0.78 0.12 250);
   --primary-container: oklch(0.34 0.1 262);
   --on-primary-container: oklch(0.88 0.07 255);
   --accent-green: oklch(0.78 0.14 152);
   --accent-yellow: oklch(0.85 0.14 85);
   --accent-red: oklch(0.72 0.15 27);
   --on-primary: oklch(0.2 0.05 262);
-}
-
-.density-compact main section {
-  padding-top: 2.25rem;
-  padding-bottom: 2.25rem;
-}
-
-.no-motion *,
-.no-motion *::before,
-.no-motion *::after {
-  animation: none !important;
-  transition: none !important;
-}
-.no-motion .reveal {
-  opacity: 1 !important;
-  transform: none !important;
 }
 
 @layer base {
@@ -134,14 +115,7 @@
   .text-green {
     color: var(--accent-green);
   }
-  .text-yellow {
-    color: var(--accent-yellow);
-  }
-  .text-red {
-    color: var(--accent-red);
-  }
 
-  /* Google four-colour accent — hairline only, never a fill */
   .g-underline {
     position: relative;
   }
@@ -183,12 +157,10 @@
     pointer-events: none;
   }
   .grad-ring:hover::before,
-  .grad-ring:focus-visible::before,
-  .grad-ring[data-active="true"]::before {
+  .grad-ring:focus-visible::before {
     opacity: 1;
   }
 
-  /* Material 3 buttons */
   .m3-filled {
     display: inline-flex;
     align-items: center;
@@ -206,23 +178,9 @@
   }
   .m3-filled:hover {
     filter: brightness(1.08);
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.12), 0 4px 10px -4px color-mix(in oklab, var(--accent-blue) 60%, transparent);
-  }
-
-  .m3-tonal {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    border-radius: 999px;
-    padding: 0.625rem 1.5rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    background: var(--primary-container);
-    color: var(--on-primary-container);
-    transition: filter 0.2s ease;
-  }
-  .m3-tonal:hover {
-    filter: brightness(0.97);
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.12),
+      0 4px 10px -4px color-mix(in oklab, var(--accent-blue) 60%, transparent);
   }
 
   .m3-outlined {
@@ -245,7 +203,6 @@
     border-color: color-mix(in oklab, var(--accent-blue) 45%, var(--outline));
   }
 
-  /* Material 3 cards */
   .card {
     background: var(--surface);
     border: 1px solid transparent;
@@ -288,116 +245,10 @@
     color: var(--foreground);
   }
 
-  .link-underline {
-    background-image: linear-gradient(currentColor, currentColor);
-    background-size: 0% 1px;
-    background-repeat: no-repeat;
-    background-position: 0 100%;
-    transition: background-size 0.25s ease;
-  }
-  .link-underline:hover {
-    background-size: 100% 1px;
-  }
-
   .reveal {
     opacity: 0;
     transform: translateY(14px);
   }
-
-  /* top scroll progress — the only place all four Google colours appear */
-  .scroll-progress {
-    position: fixed;
-    inset: 0 0 auto 0;
-    height: 2px;
-    z-index: 60;
-    transform-origin: 0 50%;
-    background: linear-gradient(90deg, #4285f4, #ea4335 35%, #fbbc05 68%, #34a853);
-    will-change: transform;
-  }
-
-  /* soft ambient light behind the hero */
-  .aura {
-    position: absolute;
-    inset: -20% -10% auto -10%;
-    height: 460px;
-    pointer-events: none;
-    z-index: -1;
-    background:
-      radial-gradient(46% 60% at 18% 20%, color-mix(in oklab, #4285f4 22%, transparent), transparent 70%),
-      radial-gradient(40% 55% at 78% 8%, color-mix(in oklab, #34a853 16%, transparent), transparent 72%),
-      radial-gradient(38% 50% at 52% 44%, color-mix(in oklab, #fbbc05 12%, transparent), transparent 70%);
-    filter: blur(18px);
-    opacity: 0.75;
-    animation: aura-drift 18s ease-in-out infinite alternate;
-  }
-  @keyframes aura-drift {
-    from {
-      transform: translate3d(-2%, -1%, 0) scale(1);
-    }
-    to {
-      transform: translate3d(3%, 2%, 0) scale(1.06);
-    }
-  }
-
-  /* cursor-following highlight on cards */
-  .spotlight {
-    position: relative;
-    overflow: hidden;
-  }
-  .spotlight::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    background: radial-gradient(
-      260px circle at var(--mx, 50%) var(--my, 50%),
-      color-mix(in oklab, var(--accent-blue) 14%, transparent),
-      transparent 62%
-    );
-  }
-  .spotlight:hover::after {
-    opacity: 1;
-  }
-
-  /* rotating role words */
-  .rotator {
-    display: inline-grid;
-    overflow: hidden;
-    vertical-align: bottom;
-  }
-  .rotator > span {
-    grid-area: 1 / 1;
-    animation: rotate-word 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  }
-  @keyframes rotate-word {
-    0% {
-      opacity: 0;
-      transform: translateY(100%);
-    }
-    12%,
-    100% {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  .idx {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--muted-foreground);
-  }
-
-  .arrow-slide {
-    transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
-  .group:hover .arrow-slide {
-    transform: translate(3px, -3px);
-  }
-
 }
 
 @media (prefers-reduced-motion: reduce) {

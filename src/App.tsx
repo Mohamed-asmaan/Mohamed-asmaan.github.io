@@ -1,4 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import {
   Activity,
@@ -36,29 +35,6 @@ import {
 import { FaLinkedin as SiLinkedin } from "react-icons/fa6";
 import type { IconType } from "react-icons";
 import { TbApi, TbBinaryTree, TbBolt, TbDatabase, TbGauge, TbRefresh } from "react-icons/tb";
-
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "M. Mohamed Asmaan — Frontend Developer" },
-      {
-        name: "description",
-        content:
-          "Frontend Developer in Bengaluru building responsive React and JavaScript applications with reusable UI, REST APIs, and measurable performance improvements.",
-      },
-      { property: "og:title", content: "M. Mohamed Asmaan — Frontend Developer" },
-      {
-        property: "og:description",
-        content: "React and JavaScript developer focused on reusable interfaces, REST integration, and frontend performance.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
-  component: Portfolio,
-});
-
-/* ---------------- data ---------------- */
 
 const NAV = [
   { id: "about", label: "About" },
@@ -202,8 +178,6 @@ const LINKS = {
   linkedin: "https://linkedin.com/in/mohamed-asmaan",
 };
 
-/* ---------------- hooks ---------------- */
-
 function useReveal() {
   useEffect(() => {
     const els = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
@@ -255,8 +229,6 @@ function useActiveSection() {
   return active;
 }
 
-/* ---------------- ui ---------------- */
-
 function SectionTitle({ title, note }: { title: string; note?: string }) {
   return (
     <div className="mb-10 flex flex-wrap items-end gap-4">
@@ -276,15 +248,21 @@ function SkillChip({ label }: { label: string }) {
   );
 }
 
-function AvatarPlaceholder({ initials }: { initials: string }) {
+function Avatar() {
   return (
-    <div className="grad-ring relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full bg-surface-2 sm:h-28 sm:w-28">
-      <span className="text-3xl font-normal text-muted-foreground">{initials}</span>
+    <div className="grad-ring relative h-24 w-24 shrink-0 overflow-hidden rounded-full bg-surface-2 sm:h-28 sm:w-28">
+      <img
+        src="/profile.png"
+        alt="M. Mohamed Asmaan"
+        width={112}
+        height={112}
+        className="h-full w-full object-cover object-[center_18%]"
+      />
     </div>
   );
 }
 
-function Portfolio() {
+export default function App() {
   useReveal();
   const active = useActiveSection();
   const [copied, setCopied] = useState(false);
@@ -311,7 +289,6 @@ function Portfolio() {
         Skip to content
       </a>
 
-      {/* header */}
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-6">
           <a href="#top" className="text-[15px] font-medium tracking-tight">
@@ -362,11 +339,10 @@ function Portfolio() {
       </header>
 
       <main id="top" className="mx-auto max-w-6xl px-6">
-        {/* hero */}
         <section className="grid items-start gap-6 py-16 md:grid-cols-3 md:py-24">
           <div className="reveal card md:col-span-2 p-8 sm:p-10">
             <div className="flex flex-wrap items-center gap-6">
-              <AvatarPlaceholder initials="MA" />
+              <Avatar />
               <div className="min-w-0">
                 <span className="chip">
                   <Sparkles size={13} className="text-blue" />
@@ -376,7 +352,7 @@ function Portfolio() {
                   M. Mohamed Asmaan
                 </h1>
                 <p className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
-                   Frontend Developer · React, JavaScript, TypeScript
+                  Frontend Developer · React, JavaScript, TypeScript
                   <span className="inline-flex items-center gap-1">
                     <MapPin size={13} /> Bengaluru
                   </span>
@@ -385,9 +361,9 @@ function Portfolio() {
             </div>
 
             <p className="mt-8 max-w-2xl text-[17px] leading-8 text-muted-foreground">
-              I build responsive product interfaces with React and JavaScript — with a bias toward
-              reusable components, reliable API integration, and details that hold up in production.
-              Currently a Frontend Developer at Alspark Solutions.
+              I build responsive product interfaces with React and JavaScript — with a bias toward reusable
+              components, reliable API integration, and details that hold up in production. Currently a Frontend
+              Developer at Alspark Solutions.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -412,31 +388,28 @@ function Portfolio() {
           </dl>
         </section>
 
-        {/* about */}
         <section id="about" className="scroll-mt-24 py-16">
           <SectionTitle title="About" />
           <div className="grid gap-6 md:grid-cols-2">
             <p className="reveal card-outlined p-7 text-[15px] leading-8 text-muted-foreground">
-              I started with computer science fundamentals and moved into frontend because it is where
-              correctness and craft meet the user directly. Over two years at Alspark Solutions, I
-              progressed from intern to Low-Code Web Developer and then Frontend Developer, working
-              across production websites and React applications.
+              I started with computer science fundamentals and moved into frontend because it is where correctness
+              and craft meet the user directly. Over two years at Alspark Solutions, I progressed from intern to
+              Low-Code Web Developer and then Frontend Developer, working across production websites and React
+              applications.
             </p>
             <p className="reveal card-outlined p-7 text-[15px] leading-8 text-muted-foreground">
-              I care about the parts that are easy to skip — loading and error states, responsive
-              behavior, bundle size, and the profiler numbers behind &quot;it feels slow&quot;. My toolkit
-              spans React, Next.js, TypeScript, Redux Toolkit, REST APIs, testing, and performance
-              optimisation.
+              I care about the parts that are easy to skip — loading and error states, responsive behavior, bundle
+              size, and the profiler numbers behind &quot;it feels slow&quot;. My toolkit spans React, Next.js,
+              TypeScript, Redux Toolkit, REST APIs, testing, and performance optimisation.
             </p>
           </div>
         </section>
 
-        {/* experience */}
         <section id="experience" className="scroll-mt-24 py-16">
           <SectionTitle title="Experience" note="Nov 2023 — present" />
           <div className="space-y-6">
             {EXPERIENCE.map((e) => (
-              <article key={e.org} className="reveal card grid gap-6 p-8 md:grid-cols-[180px_1fr]">
+              <article key={`${e.role}-${e.range}`} className="reveal card grid gap-6 p-8 md:grid-cols-[180px_1fr]">
                 <div className="text-xs text-muted-foreground">
                   <div>{e.range}</div>
                   <div className="mt-1">{e.loc}</div>
@@ -459,7 +432,6 @@ function Portfolio() {
           </div>
         </section>
 
-        {/* projects */}
         <section id="projects" className="scroll-mt-24 py-16">
           <SectionTitle title="Selected projects" note={`${PROJECTS.length} shipped`} />
           <div className="grid gap-4 sm:grid-cols-2">
@@ -482,7 +454,6 @@ function Portfolio() {
           </div>
         </section>
 
-        {/* skills */}
         <section id="skills" className="scroll-mt-24 py-16">
           <SectionTitle title="Skills" />
           <div className="grid gap-4 sm:grid-cols-2">
@@ -501,7 +472,6 @@ function Portfolio() {
           </div>
         </section>
 
-        {/* education */}
         <section id="education" className="scroll-mt-24 py-16">
           <SectionTitle title="Education" />
           <ul className="reveal card divide-y divide-border overflow-hidden">
@@ -517,7 +487,6 @@ function Portfolio() {
           </ul>
         </section>
 
-        {/* contact */}
         <section id="contact" className="scroll-mt-24 py-16 pb-28">
           <SectionTitle title="Contact" note="open to opportunities" />
           <div className="reveal card p-9 sm:p-12">
@@ -525,8 +494,8 @@ function Portfolio() {
               Let&apos;s build something dependable.
             </h3>
             <p className="mt-4 max-w-xl text-[15px] leading-8 text-muted-foreground">
-              I&apos;m open to frontend developer and software engineering roles, and happy to talk
-              through interface architecture, performance work, or a specific product problem.
+              I&apos;m open to frontend developer and software engineering roles, and happy to talk through
+              interface architecture, performance work, or a specific product problem.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a href={`mailto:${email}`} className="m3-filled">
