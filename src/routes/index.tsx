@@ -1,24 +1,26 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import {
+  Activity,
   ArrowUpRight,
   Check,
+  Code2,
   Copy,
   Circle,
+  FlaskConical,
   Mail,
   MapPin,
   Sparkles,
+  TestTube2,
   type LucideIcon,
 } from "lucide-react";
 import {
   SiChromewebstore,
   SiCss,
   SiExpress,
-  SiFigma,
   SiFirebase,
   SiGit,
   SiGithub,
-  SiGraphql,
   SiHtml5,
   SiJavascript,
   SiJsonwebtokens,
@@ -27,7 +29,6 @@ import {
   SiPostman,
   SiReact,
   SiRedux,
-  SiTailwindcss,
   SiTypescript,
   SiVite,
   SiWebpack,
@@ -39,16 +40,16 @@ import { TbApi, TbBinaryTree, TbBolt, TbDatabase, TbGauge, TbRefresh } from "rea
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "M. Mohamed Asmaan — Software Engineer, Frontend" },
+      { title: "M. Mohamed Asmaan — Frontend Developer" },
       {
         name: "description",
         content:
-          "Software engineer in Bengaluru working on React and TypeScript interfaces: performance, design systems, and product UI at scale.",
+          "Frontend Developer in Bengaluru building responsive React and JavaScript applications with reusable UI, REST APIs, and measurable performance improvements.",
       },
-      { property: "og:title", content: "M. Mohamed Asmaan — Software Engineer" },
+      { property: "og:title", content: "M. Mohamed Asmaan — Frontend Developer" },
       {
         property: "og:description",
-        content: "React & TypeScript engineer focused on performance, accessibility, and product UI.",
+        content: "React and JavaScript developer focused on reusable interfaces, REST integration, and frontend performance.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -70,58 +71,78 @@ const NAV = [
 
 const EXPERIENCE = [
   {
-    role: "Frontend Engineer, React",
+    role: "Frontend Developer",
     org: "Alspark Solutions",
-    range: "2024 — Present",
+    range: "Aug 2025 — Present",
     loc: "Bengaluru, India",
     bullets: [
-      "Own UI modules end-to-end for a production conversational platform: design handoff, REST integration, release.",
-      "Reduced unnecessary re-renders by ~30% through memoisation and reconciliation-aware refactors.",
-      "Built a shared component library that removed duplicated UI code across product areas.",
-      "Translate Figma specs into pixel-accurate, responsive, accessible React components.",
+      "Develop and maintain responsive web applications using React and JavaScript, building reusable UI components from product designs.",
+      "Integrate frontend applications with REST APIs and backend services while optimising responsiveness and cross-browser compatibility.",
+      "Debug and resolve UI, functional, and performance issues, contributing to clean, maintainable, and testable frontend code.",
+      "Collaborate with product, design, and engineering teams through code reviews and Git-based development workflows.",
+    ],
+  },
+  {
+    role: "Low-Code Web Developer",
+    org: "Alspark Solutions",
+    range: "May 2024 — Aug 2025",
+    loc: "Bengaluru, India",
+    bullets: [
+      "Built and maintained scalable, client-ready websites and web interfaces across custom frontend development and CMS-driven platforms.",
+      "Progressed into a broader web development role by applying production web fundamentals across client projects.",
+    ],
+  },
+  {
+    role: "Low-Code Web Development Intern",
+    org: "Alspark Solutions",
+    range: "Nov 2023 — May 2024",
+    loc: "Bengaluru, India",
+    bullets: [
+      "Contributed to web interfaces and features while learning and applying core web development concepts in real production projects.",
     ],
   },
 ];
 
 const PROJECTS = [
   {
-    title: "Bangla Health Connect",
-    kind: "Multilingual content platform",
-    impact: "2.02M monthly impressions",
-    stack: ["React", "Node.js", "REST"],
-    body: "900+ multilingual healthcare pages served without performance regressions. Conditional RTL for Arabic, EN/AR switching, modular content APIs.",
+    title: "Bangla Health Connect & MyHeco",
+    kind: "High-performance content platform",
+    impact: "27.8K clicks · 2.02M impressions",
+    stack: ["React", "Next.js (SSR)", "Node.js", "REST"],
+    body: "Built the React admin and team dashboard for CRUD-based content management, and public-facing Next.js pages with server-side rendering for speed and responsiveness. Reduced unnecessary re-renders by 30% through memoisation.",
   },
   {
     title: "Number Link",
     kind: "Conversational UI platform",
     impact: "100+ message chat state, no jank",
     stack: ["React", "TypeScript", "Firebase"],
-    body: "Replaced form-based onboarding with a conversational interface. Handled long chat history state, Firebase auth and Realtime Database, dynamic profile routing.",
+    body: "Replaced traditional forms with a conversational React UI. Implemented Firebase authentication and Realtime Database integration across 100+ message chat histories without performance degradation.",
   },
   {
     title: "Pizza Palace",
     kind: "Full-stack MERN application",
     impact: "Shipped solo, end to end",
     stack: ["React", "Redux Toolkit", "Express", "MongoDB"],
-    body: "Food ordering system built alone: schema design, CRUD API, JWT auth, and Razorpay payments with signature verification.",
+    body: "Built a complete full-stack application independently: Redux Toolkit state management, REST API design, JWT authentication, MongoDB data, and Razorpay payment integration.",
   },
   {
     title: "SEO DOM Inspector",
     kind: "Chrome extension",
     impact: "15+ DOM signals, non-blocking",
     stack: ["React", "JavaScript (ES6+)", "Chrome APIs"],
-    body: "Inspects structural DOM signals in real time from the extension surface without blocking the page's main thread.",
+    body: "Built a React-based browser extension with reusable UI components, inspecting 15+ structural DOM signals in real time without blocking the main thread.",
   },
 ];
 
 const SKILLS = [
-  { g: "Languages", items: ["TypeScript", "JavaScript (ES6+)", "HTML", "CSS", "SQL basics"] },
-  { g: "Frameworks", items: ["React", "Redux Toolkit", "Node.js", "Express", "Tailwind CSS"] },
-  { g: "Platform", items: ["REST", "GraphQL", "Firebase", "MongoDB", "JWT / OTP auth"] },
-  { g: "Tooling", items: ["Vite", "Webpack", "Git", "Postman", "Chrome APIs", "Figma"] },
+  { g: "Languages", items: ["JavaScript (ES6+)", "TypeScript", "HTML", "CSS", "SQL"] },
+  { g: "Frontend", items: ["React", "Next.js (SSR)", "Redux Toolkit", "Context API"] },
+  { g: "APIs & auth", items: ["REST", "JSON", "JWT / OTP auth", "Firebase"] },
+  { g: "Testing & performance", items: ["Postman", "Jest", "React Testing Library", "Core Web Vitals", "Lighthouse"] },
+  { g: "Tooling", items: ["Git", "GitHub", "npm", "Vite", "Webpack", "Chrome DevTools", "Agile / Scrum"] },
   {
-    g: "Fundamentals",
-    items: ["Data structures", "Event loop", "Closures", "Async patterns", "Rendering performance"],
+    g: "JavaScript fundamentals",
+    items: ["Data structures", "OOP", "Event loop", "Closures", "Async / await", "Rendering optimisation"],
   },
 ];
 
@@ -131,46 +152,54 @@ const TOOL_ICON: Record<string, IconType | LucideIcon> = {
   JavaScript: SiJavascript,
   HTML: SiHtml5,
   CSS: SiCss,
-  "SQL basics": TbDatabase,
+  SQL: TbDatabase,
   React: SiReact,
   "Redux Toolkit": SiRedux,
+  "Context API": TbRefresh,
   "Node.js": SiNodedotjs,
   Express: SiExpress,
-  "Tailwind CSS": SiTailwindcss,
+  "Next.js (SSR)": Code2,
   REST: TbApi,
-  GraphQL: SiGraphql,
+  JSON: Code2,
   Firebase: SiFirebase,
   MongoDB: SiMongodb,
   "JWT / OTP auth": SiJsonwebtokens,
+  Jest: FlaskConical,
+  "React Testing Library": TestTube2,
+  "Core Web Vitals": Activity,
+  Lighthouse: TbGauge,
   Vite: SiVite,
   Webpack: SiWebpack,
   Git: SiGit,
+  GitHub: SiGithub,
+  npm: SiWebpack,
   Postman: SiPostman,
-  "Chrome APIs": SiChromewebstore,
-  Figma: SiFigma,
+  "Chrome DevTools": SiChromewebstore,
+  "Agile / Scrum": TbRefresh,
   "Data structures": TbBinaryTree,
+  OOP: TbBinaryTree,
   "Event loop": TbRefresh,
   Closures: TbBolt,
-  "Async patterns": TbBolt,
-  "Rendering performance": TbGauge,
+  "Async / await": TbBolt,
+  "Rendering optimisation": TbGauge,
 };
 
 const EDUCATION = [
-  { t: "2024 — Present", h: "MCA", s: "SRM Institute of Science and Technology" },
+  { t: "2024 — 2026", h: "Master of Computer Applications", s: "SRM Institute of Science and Technology" },
   { t: "2019 — 2023", h: "B.E. Computer Science", s: "Anna University, Chennai" },
-  { t: "2026", h: "MERN Bootcamp", s: "Error Makes Clever" },
+  { t: "Jun 2026", h: "4-month Full Stack MERN Development Bootcamp", s: "EMC (Error Makes Clever)" },
 ];
 
 const FACTS = [
-  { k: "Experience", v: "2+ yrs" },
+  { k: "Experience", v: "2 yrs" },
+  { k: "Career growth", v: "2 promotions" },
+  { k: "Measured impact", v: "30% fewer re-renders" },
   { k: "Location", v: "Bengaluru, IN" },
-  { k: "Focus", v: "Frontend systems" },
-  { k: "Open to", v: "SWE roles" },
 ];
 
 const LINKS = {
-  github: "https://github.com/",
-  linkedin: "https://www.linkedin.com/",
+  github: "https://github.com/Mohamed-asmaan",
+  linkedin: "https://linkedin.com/in/mohamed-asmaan",
 };
 
 /* ---------------- hooks ---------------- */
@@ -261,7 +290,7 @@ function Portfolio() {
   const [copied, setCopied] = useState(false);
   const yearRef = useRef(new Date().getFullYear());
 
-  const email = "asmaan.dev@gmail.com";
+  const email = "asmaan011@gmail.com";
 
   const copyEmail = async () => {
     try {
@@ -347,7 +376,7 @@ function Portfolio() {
                   M. Mohamed Asmaan
                 </h1>
                 <p className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
-                  Software Engineer · Frontend
+                   Frontend Developer · React, JavaScript, TypeScript
                   <span className="inline-flex items-center gap-1">
                     <MapPin size={13} /> Bengaluru
                   </span>
@@ -356,9 +385,9 @@ function Portfolio() {
             </div>
 
             <p className="mt-8 max-w-2xl text-[17px] leading-8 text-muted-foreground">
-              I build product interfaces in React and TypeScript — with a bias toward measurable
-              performance, reusable systems, and details that hold up in production. Currently at
-              Alspark Solutions.
+              I build responsive product interfaces with React and JavaScript — with a bias toward
+              reusable components, reliable API integration, and details that hold up in production.
+              Currently a Frontend Developer at Alspark Solutions.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -389,21 +418,22 @@ function Portfolio() {
           <div className="grid gap-6 md:grid-cols-2">
             <p className="reveal card-outlined p-7 text-[15px] leading-8 text-muted-foreground">
               I started with computer science fundamentals and moved into frontend because it is where
-              correctness and craft meet the user directly. Most of my work sits between design and
-              infrastructure: turning specs into components, wiring them to APIs, and keeping the render
-              path fast as the product grows.
+              correctness and craft meet the user directly. Over two years at Alspark Solutions, I
+              progressed from intern to Low-Code Web Developer and then Frontend Developer, working
+              across production websites and React applications.
             </p>
             <p className="reveal card-outlined p-7 text-[15px] leading-8 text-muted-foreground">
-              I care about the parts that are easy to skip — loading and error states, keyboard access,
-              bundle size, and the profiler numbers behind &quot;it feels slow&quot;. I&apos;m currently
-              completing an MCA alongside full-time engineering work.
+              I care about the parts that are easy to skip — loading and error states, responsive
+              behavior, bundle size, and the profiler numbers behind &quot;it feels slow&quot;. My toolkit
+              spans React, Next.js, TypeScript, Redux Toolkit, REST APIs, testing, and performance
+              optimisation.
             </p>
           </div>
         </section>
 
         {/* experience */}
         <section id="experience" className="scroll-mt-24 py-16">
-          <SectionTitle title="Experience" note="2024 — present" />
+          <SectionTitle title="Experience" note="Nov 2023 — present" />
           <div className="space-y-6">
             {EXPERIENCE.map((e) => (
               <article key={e.org} className="reveal card grid gap-6 p-8 md:grid-cols-[180px_1fr]">
@@ -495,8 +525,8 @@ function Portfolio() {
               Let&apos;s build something dependable.
             </h3>
             <p className="mt-4 max-w-xl text-[15px] leading-8 text-muted-foreground">
-              I&apos;m open to frontend and full-stack engineering roles, and happy to talk through
-              interface architecture, performance work, or a specific problem you&apos;re stuck on.
+              I&apos;m open to frontend developer and software engineering roles, and happy to talk
+              through interface architecture, performance work, or a specific product problem.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a href={`mailto:${email}`} className="m3-filled">
