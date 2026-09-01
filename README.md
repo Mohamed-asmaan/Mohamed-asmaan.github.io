@@ -1,8 +1,10 @@
 # Mohamed Asmaan — Portfolio
 
-Personal site for **M. Mohamed Asmaan**, a frontend developer in Bengaluru.
+Personal site of **M. Mohamed Asmaan**, a frontend developer in Bengaluru.
 
-Built with React, TypeScript, Vite, and Tailwind CSS.
+**Live:** https://mohamed-asmaan.github.io/
+
+React · TypeScript · Vite · Tailwind CSS
 
 ## Run locally
 
@@ -11,12 +13,12 @@ npm install
 npm run dev
 ```
 
-Then open the URL Vite prints (usually `http://localhost:5173`).
+Open the URL Vite prints (usually `http://localhost:5173`).
 
 ## Scripts
 
 | Command | What it does |
 | --- | --- |
-| `npm run dev` | Start the local dev server |
-| `npm run build` | Type-check and create a production build |
-| `npm run preview` | Serve the production build locally |
+| `npm run dev` | Local development server |
+| `npm run build` | Production build |
+| `npm run preview` | Preview the production build |
